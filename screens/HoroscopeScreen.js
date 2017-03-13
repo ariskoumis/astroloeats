@@ -3,12 +3,19 @@ import {
 	StyleSheet,
 	View,
 	Text,
+	Button
 } from 'react-native';
 
 export default class HoroscopeScreen extends React.Component {
+	static route = {
+		navigationBar: {
+			title: "Horoscope"
+		}
+	}
+
 	render () {
 		return (
-			<View style={styles.container}>
+			<View style={styles.container}>			
 				<Text> Horoscope </Text>
 			</View>
 		)
