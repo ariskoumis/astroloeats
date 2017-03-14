@@ -3,7 +3,8 @@ import {
 	StyleSheet,
 	View,
 	Text,
-	Button
+	Button,
+	Alert
 } from 'react-native';
 
 export default class HoroscopeScreen extends React.Component {
@@ -17,8 +18,15 @@ export default class HoroscopeScreen extends React.Component {
 		return (
 			<View style={styles.container}>			
 				<Text> Horoscope </Text>
+				<Button onPress={this._getHoroscope} title="Get Horoscope" /> 
 			</View>
 		)
+	}
+
+	_getHoroscope = async () => {
+		const response = await fetch('http://theastrologer-api.herokuapp.com/api/horoscope/aries/today')
+		var horoscope = response._bodyText.horoscope
+		console.log(response._bodyText.sunsign)
 	}
 }
 

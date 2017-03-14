@@ -20,9 +20,8 @@ class App extends React.Component {
     super()
     this.state = {
       appIsReady: true,
-      loggedIn: false
+      loggedIn: true
     }
-    // this._handleLogIn = this._handleLogIn.bind(this)
   }
 
 
@@ -32,7 +31,7 @@ class App extends React.Component {
     }
 
     if (!this.state.loggedIn) {
-      return <LoginScreen _onLogIn={this._onLogIn}/>
+      return <LoginScreen onLogIn={this._onLogIn}/>
     }
 
     return (
@@ -43,9 +42,9 @@ class App extends React.Component {
   }
 
   _onLogIn = () => {
-    var newState = this.state
-    newState.loggedIn = true
-    this.setState(newState)
+    this.setState({
+      loggedIn: true
+    })
   }
 
 }

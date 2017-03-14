@@ -21,10 +21,6 @@ export default class LoginScreen extends React.Component {
 		)
 	}
 
-	_handleLogIn = () => {
-		this.props._onLogIn()
-	}
-
 	_handleFacebookLogin = async () => {
 		const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync('101465287056746', {
 		permissions: ['public_profile', 'user_birthday'],
@@ -35,7 +31,7 @@ export default class LoginScreen extends React.Component {
       		const response = await fetch( `https://graph.facebook.com/me?access_token=${token}&fields=id,name,birthday`)
       		const userInfo = await response.json()
       		Alert.alert('Logged in!', `Hi ${userInfo.name}!`)
-      		this._handleLogIn()
+      		this.props.onLogIn()
 		}
 
 	}
