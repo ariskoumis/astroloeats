@@ -17,10 +17,26 @@ import LoginScreen from './screens/LoginScreen';
 
 class App extends React.Component {
   constructor() {
-    super()
+    super() 
+
+    var loggedInVal = async () => {
+      var alreadyLoggedIn = false
+
+      try {
+        birthday = await ASyncStorage.getItem('birthday')
+        if (birthday !== null) {
+          alreadyLoggedIn = true
+        }
+      } catch (err) {
+        console.warn(err)
+      }
+      
+      return alreadyLoggedIn
+    }
+
     this.state = {
       appIsReady: true,
-      loggedIn: true
+      loggedIn: loggedInVal
     }
   }
 
@@ -44,7 +60,7 @@ class App extends React.Component {
   _onLogIn = () => {
     this.setState({
       loggedIn: true
-    })
+    })  
   }
 
 }
