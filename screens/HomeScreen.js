@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import Router from '../navigation/Router';
 
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends  React.Component {
 
 	render () {
 		return (
