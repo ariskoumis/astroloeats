@@ -47,6 +47,8 @@ export default class HoroscopeScreen extends React.Component {
 		this.setState({
 			dailyHoroscope: horoscope
 		})
+		var horoscopeTone = await fetch('https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText')
+		console.log(horoscopeTone._bodyInit)
 	}
 }
 
