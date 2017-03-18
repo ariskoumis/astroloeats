@@ -1,3 +1,4 @@
 node_modules/**/*
 .expo/*
 npm-debug.*
+lambda/analyzeText/node_modules/**/*

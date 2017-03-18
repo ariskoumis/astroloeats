@@ -8,6 +8,7 @@ import {
 	AsyncStorage
 } from 'react-native';
 import getAstrologicalSign from '../utils/getAstrologicalSign';
+import encodeQueryString from '../utils/encodeQueryString';
 
 export default class HoroscopeScreen extends React.Component {
 	constructor() {
@@ -43,11 +44,11 @@ export default class HoroscopeScreen extends React.Component {
 		var sign = await getAstrologicalSign();
 		const response = await fetch(`http://theastrologer-api.herokuapp.com/api/horoscope/${sign}/today`)
 		var horoscope = JSON.parse(response._bodyText).horoscope
-		console.log(horoscope)
 		this.setState({
 			dailyHoroscope: horoscope
 		})
-		var horoscopeTone = await fetch('https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText')
+		horoscope = encodeQueryString(horoscope)
+		var horoscopeTone = await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${horoscope}`)
 		console.log(horoscopeTone._bodyInit)
 	}
 }
