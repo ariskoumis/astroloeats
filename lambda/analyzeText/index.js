@@ -10,19 +10,12 @@ var tone_analyzer = new ToneAnalyzerV3({
 
 
 
-exports.handler = function(e, context, callback) {
-	var horoscope = new Promise((resolve,reject) => {
-		resolve("e.params.querystring.horoscope")
-	})
-
-	horoscope.then((horoscope) => {
-		tone_analyzer.tone({ text: horoscope },
+exports.handler = (e, context, callback) => {
+	tone_analyzer.tone({ text: e.horoscope },
 		(err, tone) => {
 		    if (err)
 		      callback(err)
 		    else
 		      callback(null, tone)
-		})
-	}) 
-	
-}
+	})	
+}	
