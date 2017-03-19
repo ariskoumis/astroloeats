@@ -28,7 +28,7 @@ class App extends React.Component {
           alreadyLoggedIn = true
         }
       } catch (err) {
-        console.warn(err)
+        console.err(err)
       }
       
       return alreadyLoggedIn
@@ -54,7 +54,7 @@ class App extends React.Component {
       <NavigationProvider router={Router}>
         <StackNavigation initialRoute={Router.getRoute('home')} />
       </NavigationProvider>
-    );
+    )
   }
 
   _onLogIn = () => {
