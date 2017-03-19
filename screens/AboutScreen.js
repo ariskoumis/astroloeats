@@ -12,7 +12,7 @@ export default class AboutScreen extends React.Component {
 		}
 	}
 
-	render () {
+	render() {
 		return (
 			<View style={styles.container}>
 				<Text> About </Text>

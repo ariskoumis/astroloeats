@@ -15,6 +15,7 @@ export default class HomeScreen extends  React.Component {
 				<View style={styles.homebutton}>
 					<Button onPress={this._goToAbout} title="About"/>
 					<Button onPress={this._goToHoroscope} title="Horoscope"/>
+					<Button onPress={this._goToMap} title="Map" />
 				</View>
 			</View>
 		)
@@ -26,6 +27,10 @@ export default class HomeScreen extends  React.Component {
 
 	_goToAbout = () => {
 		this.props.navigator.push(Router.getRoute('about'))
+	}
+
+	_goToMap = () => {
+		this.props.navigator.push(Router.getRoute('map'))
 	}
 }
 
