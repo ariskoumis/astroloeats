@@ -2,21 +2,25 @@ import React from 'react';
 import {
 	StyleSheet,
 	View,
+	ScrollView,
 	Text,
 	Button,
 	Alert,
 	AsyncStorage
 } from 'react-native';
+import {Components} from 'expo';
 import getAstrologicalSign from '../utils/getAstrologicalSign';
 import encodeQueryString from '../utils/encodeQueryString';
+import dominantTones from '../utils/dominantTones';
 
 export default class HoroscopeScreen extends React.Component {
 	constructor() {
 		super()
 		this.state = {
+			screenIsReady: false,
 			dailyHoroscope: "",
+			horoscopeTone: ""
 		}
-		this._getHoroscope = this._getHoroscope.bind(this)
 	}
 
 	static route = {
@@ -26,30 +30,49 @@ export default class HoroscopeScreen extends React.Component {
 	}
 
 	async componentDidMount() {
-		var birthday = await AsyncStorage.getAllKeys()
+		await this._loadContentAsync()
+		this.setState({
+			screenIsReady: true
+		})
 	}
 
 	render () {
-		return (
-			<View style={styles.container}>			
-				<Button onPress={this._getHoroscope} title="Get Horoscope" /> 
-				<Text> 
-					{this.state.dailyHoroscope} 
-				</Text>
-			</View>
-		)
+		if (!this.state.screenIsReady) {
+			return (
+				<View style={styles.container}>
+					<Text> Loading </Text>
+				</View>
+			)
+		} else {
+			return (
+				<View style={styles.container}>
+					<ScrollView>			
+						<Text> 
+							{this.state.dailyHoroscope} 
+						</Text>
+						<Text>
+							Insert Tone Analysis Here
+						</Text>
+					</ScrollView>
+				</View>
+			)	
+		}
+		
 	}
 
-	_getHoroscope = async () => {
-		var sign = await getAstrologicalSign();
+	_loadContentAsync = async () => {
+		var sign = await getAstrologicalSign()
 		const response = await fetch(`http://theastrologer-api.herokuapp.com/api/horoscope/${sign}/today`)
 		var horoscope = JSON.parse(response._bodyText).horoscope
+
+		var horoscopeTone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
+		var test = await dominantTones(horoscopeTone)
+		console.log(test)
+
 		this.setState({
-			dailyHoroscope: horoscope
+			dailyHoroscope: horoscope,
+			horoscopeTone: JSON.stringify(horoscopeTone)
 		})
-		horoscope = encodeQueryString(horoscope)
-		var horoscopeTone = await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${horoscope}`)
-		console.log(horoscopeTone._bodyInit)
 	}
 }
 

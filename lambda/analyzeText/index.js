@@ -11,7 +11,8 @@ var tone_analyzer = new ToneAnalyzerV3({
 
 
 exports.handler = (e, context, callback) => {
-	tone_analyzer.tone({ text: e.horoscope },
+	var horoscope = decodeURI(e.horoscope)
+	tone_analyzer.tone({ text: horoscope },
 		(err, tone) => {
 		    if (err)
 		      callback(err)
