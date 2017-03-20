@@ -3,7 +3,7 @@ import {
 } from 'react-native';
 
 
-export default async function getAstrologicalSign() {
+export default getAstrologicalSign = async () => {
 	var birthday = new Date(await AsyncStorage.getItem('birthday'))
 	var day = birthday.getDay() + 1 //January is 0, shifted up 1 for readability
 	var month = birthday.getMonth()
