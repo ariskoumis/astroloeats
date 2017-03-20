@@ -6,8 +6,10 @@ import {
 	Text,
 	Button,
 	Alert,
-	AsyncStorage
+	AsyncStorage,
+	TouchableHighlight
 } from 'react-native';
+import {TabNavigator} from 'react-navigation';
 import {Components} from 'expo';
 import getAstrologicalSign from '../utils/getAstrologicalSign';
 import encodeQueryString from '../utils/encodeQueryString';
@@ -22,6 +24,20 @@ export default class HoroscopeScreen extends React.Component {
 			horoscopeTone: ""
 		}
 	}
+
+	const InfoTabs = TabNavigator({
+	  tabBarOptions: {
+	    style: styles.tabbar,
+	    indicatorStyle: styles.indicator,
+	    labelStyle: styles.tablabel,
+	    activeTintColor: '#222',
+	    inactiveTintColor: '#222',
+	  },
+	  backBehavior: 'none',
+	  initialRouteName: 'Details',
+	  order: [ 'Details', 'Matches', 'Tools' ],
+	});
+
 
 	static route = {
 		navigationBar: {
@@ -46,6 +62,15 @@ export default class HoroscopeScreen extends React.Component {
 		} else {
 			return (
 				<View style={styles.container}>
+					<ScrollView
+						horizontal={true}
+						showsHorizontalScrollIndicator={true}
+					>
+						<Button title="hello"/>
+						<Button title="hello"/>
+						<Button title="hello"/>
+						<Button title="hello"/>
+					</ScrollView>
 					<ScrollView>			
 						<Text> 
 							{this.state.dailyHoroscope} 
@@ -65,13 +90,14 @@ export default class HoroscopeScreen extends React.Component {
 		const response = await fetch(`http://theastrologer-api.herokuapp.com/api/horoscope/${sign}/today`)
 		var horoscope = JSON.parse(response._bodyText).horoscope
 
-		var horoscopeTone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
-		var test = await dominantTones(horoscopeTone)
-		console.log(test)
+		// var horoscopeTone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
+		// console.log(horoscopeTone)
+		// var dominantTones = await dominantTones(horoscopeTone)
+		// console.log(dominantTones)
 
 		this.setState({
 			dailyHoroscope: horoscope,
-			horoscopeTone: JSON.stringify(horoscopeTone)
+			// horoscopeTone: JSON.stringify(horoscopeTone)
 		})
 	}
 }
@@ -83,4 +109,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  tabs: {
+  	flexDirection: 'row',
+  	justifyContent: 'flex-start',
+  	alignItems: 'stretch'
+  }
 });

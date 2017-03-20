@@ -60,7 +60,6 @@ export default class MapScreen extends React.Component {
 		var { status } = await Permissions.askAsync(Permissions.LOCATION)
 		if (status === 'granted') {
 			var currentLocation = await Location.getCurrentPositionAsync({enableHighAccuracy: true})
-			console.log(currentLocation)
 			this.setState({
 				region: {
 					latitude: currentLocation.coords.latitude,
@@ -69,9 +68,9 @@ export default class MapScreen extends React.Component {
 	          		longitudeDelta: 0.0421
 			 	}
 			})
-			console.log(this.state.region)
 		} else {
 			Alert.alert("Error", "Please enable location services.")
+
 		}
 	}
 }
