@@ -1,4 +1,5 @@
 import React from 'react';
+import {Components} from 'expo';
 import {
 	StyleSheet,
 	View,
@@ -9,11 +10,13 @@ import {
 	AsyncStorage,
 	TouchableHighlight
 } from 'react-native';
-import {TabNavigator} from 'react-navigation';
-import {Components} from 'expo';
+
+
 import getAstrologicalSign from '../utils/getAstrologicalSign';
 import encodeQueryString from '../utils/encodeQueryString';
 import dominantTones from '../utils/dominantTones';
+
+import HoroscopeTabView from '../components/HoroscopeTabView';
 
 export default class HoroscopeScreen extends React.Component {
 	constructor() {
@@ -25,24 +28,10 @@ export default class HoroscopeScreen extends React.Component {
 		}
 	}
 
-	const InfoTabs = TabNavigator({
-	  tabBarOptions: {
-	    style: styles.tabbar,
-	    indicatorStyle: styles.indicator,
-	    labelStyle: styles.tablabel,
-	    activeTintColor: '#222',
-	    inactiveTintColor: '#222',
-	  },
-	  backBehavior: 'none',
-	  initialRouteName: 'Details',
-	  order: [ 'Details', 'Matches', 'Tools' ],
-	});
-
-
 	static route = {
 		navigationBar: {
 			title: "Horoscope"
-		}
+		},
 	}
 
 	async componentDidMount() {
@@ -61,25 +50,7 @@ export default class HoroscopeScreen extends React.Component {
 			)
 		} else {
 			return (
-				<View style={styles.container}>
-					<ScrollView
-						horizontal={true}
-						showsHorizontalScrollIndicator={true}
-					>
-						<Button title="hello"/>
-						<Button title="hello"/>
-						<Button title="hello"/>
-						<Button title="hello"/>
-					</ScrollView>
-					<ScrollView>			
-						<Text> 
-							{this.state.dailyHoroscope} 
-						</Text>
-						<Text>
-							Insert Tone Analysis Here
-						</Text>
-					</ScrollView>
-				</View>
+				<HoroscopeTabView />
 			)	
 		}
 		
@@ -108,10 +79,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  tabs: {
-  	flexDirection: 'row',
-  	justifyContent: 'flex-start',
-  	alignItems: 'stretch'
   }
 });
