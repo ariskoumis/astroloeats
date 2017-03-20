@@ -2,8 +2,9 @@ import React from 'react';
 import {
 	View, 
 	Text,
-	StyleSheet
+	StyleSheet,
 } from 'react-native';
+import findDominantTones from '../utils/findDominantTones';
 
 export default class MoodScreen extends React.Component {
 	render() {
@@ -16,6 +17,8 @@ export default class MoodScreen extends React.Component {
 		)
 	}
 }
+
+// var dominantTones = await findDominantTones(horoscopeTone)
 
 const styles = StyleSheet.create({
 	page: {

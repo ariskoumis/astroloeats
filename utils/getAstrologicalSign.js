@@ -5,9 +5,9 @@ import {
 
 export default getAstrologicalSign = async () => {
 	var birthday = new Date(await AsyncStorage.getItem('birthday'))
-	var day = birthday.getDay() + 1 //January is 0, shifted up 1 for readability
-	var month = birthday.getMonth()
-	var returnVal = "none"
+	var month = birthday.getMonth() + 1 //January is 0, shifted up 1 for readability
+	var day = birthday.getDate()
+	console.log(month + " " + day)
 
 	if (month == 1) { 
 		if (day < 20) {
@@ -42,7 +42,7 @@ export default getAstrologicalSign = async () => {
 		}
 	}
 	else if (month == 5) {
-		if (day >= 21) {
+		if (day < 21) {
 			return 'taurus'
 		} 
 		else {
@@ -50,7 +50,7 @@ export default getAstrologicalSign = async () => {
 		}
 	}
 	else if (month == 6) {
-		if (day >= 21) {
+		if (day <= 21) {
 			return 'gemini'
 		} 
 		else {
@@ -58,7 +58,7 @@ export default getAstrologicalSign = async () => {
 		}
 	}
 	else if (month == 7) {
-		if (day >= 23) {
+		if (day <= 23) {
 			return 'cancer'
 		} 
 		else {
@@ -66,7 +66,7 @@ export default getAstrologicalSign = async () => {
 		}
 	}
 	else if (month == 8) {
-		if (day >= 23) {
+		if (day < 23) {
 			return 'leo'
 		} 
 		else {
@@ -74,7 +74,7 @@ export default getAstrologicalSign = async () => {
 		}
 	}
 	else if (month == 9) {
-		if (day >= 23) {
+		if (day < 23) {
 			return 'virgo'
 		} 
 		else {
@@ -82,7 +82,7 @@ export default getAstrologicalSign = async () => {
 		}
 	}
 	else if (month == 10) {
-		if (day >= 23) {
+		if (day < 23) {
 			return 'libra'
 		} 
 		else {
@@ -90,7 +90,7 @@ export default getAstrologicalSign = async () => {
 		}
 	}
 	else if (month == 11) {
-		if (day >= 22) {
+		if (day < 22) {
 			return 'scorpio'
 		} 
 		else {
@@ -98,7 +98,7 @@ export default getAstrologicalSign = async () => {
 		}
 	}
 	else if (month == 12) {
-		if (day >= 22) {
+		if (day > 22) {
 			return 'sagittarius'
 		} 
 		else {

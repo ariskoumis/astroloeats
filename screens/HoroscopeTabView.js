@@ -7,10 +7,12 @@ import {
 import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 
 import getAstrologicalSign from '../utils/getAstrologicalSign';
-import findDominantTones from '../utils/findDominantTones';
 
 import HoroscopePage from '../components/HoroscopePage';
+import HoroscopePageHeader from '../components/HoroscopePageHeader';
 import MoodPage from '../components/MoodPage';
+import StatusBarBackground from '../components/StatusBarBackground';
+
 
 export default class HoroscopeTabView extends React.Component {
 	state = {
@@ -53,15 +55,16 @@ export default class HoroscopeTabView extends React.Component {
 
 	_loadContentAsync = async () => {
 		var sign = await getAstrologicalSign()
+		console.log(sign)
 		const response = await fetch(`http://theastrologer-api.herokuapp.com/api/horoscope/${sign}/today`)
 		var horoscope = JSON.parse(response._bodyText).horoscope
 
 		var horoscopeTone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
-		var dominantTones = await findDominantTones(horoscopeTone)
 
 		this.setState({
 			dailyHoroscope: horoscope,
-			horoscopeTone: JSON.stringify(horoscopeTone)
+			horoscopeTone: JSON.stringify(horoscopeTone),
+			astrologicalSign: sign
 		})
 	}
 
@@ -75,13 +78,17 @@ export default class HoroscopeTabView extends React.Component {
 			)
 		} else {
 			return (
-				<TabViewAnimated
-					style={styles.container}
-					navigationState={this.state}
-					renderScene={this._renderScene}
-					renderHeader={this._renderHeader}
-					onRequestChangeTab={this._handleChangeTab}
-				/>
+				<View style={styles.container}>
+					<StatusBarBackground />
+					<HoroscopePageHeader sign={this.state.astrologicalSign}/>
+					<TabViewAnimated
+						style={styles.container}
+						navigationState={this.state}
+						renderScene={this._renderScene}
+						renderHeader={this._renderHeader}
+						onRequestChangeTab={this._handleChangeTab}
+					/>
+				</View>
 			)
 		}
 	}

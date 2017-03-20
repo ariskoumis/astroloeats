@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 export default class HoroscopeScreen extends React.Component {
-	render() {
+	render () {
 		return (
 			<View style={[ styles.page, { backgroundColor: '#ff4081' }]}>			
 				<Text> 
