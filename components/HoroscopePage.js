@@ -5,11 +5,14 @@ import {
 	StyleSheet
 } from 'react-native';
 
+import HoroscopePageHeader from '../components/HoroscopePageHeader';
+
 export default class HoroscopeScreen extends React.Component {
 	render () {
 		return (
-			<View style={[ styles.page, { backgroundColor: '#ff4081' }]}>			
-				<Text> 
+			<View style={[styles.page, { backgroundColor: '#ffffff' }]}>
+				<HoroscopePageHeader sign={this.props.sign} />			
+				<Text style={{color: "#000000"}}>
 					{this.props.dailyHoroscope} 
 				</Text>
 			</View>

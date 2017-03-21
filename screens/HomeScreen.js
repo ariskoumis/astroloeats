@@ -1,50 +1,107 @@
 import React from 'react';
 import {
-	StyleSheet,
 	View,
+	StyleSheet,
 	Text,
-	Button,
+	Image
 } from 'react-native';
-import Router from '../navigation/Router';
+import {TabViewAnimated, TabBar} from 'react-native-tab-view';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class HomeScreen extends  React.Component {
+import HoroscopePage from '../components/HoroscopePage';
+import MoodPage from '../components/MoodPage';
+import StatusBarBackground from '../components/StatusBarBackground';
 
-	render () {
+
+export default class HoroscopeTabView extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			screenIsReady: false,
+			index: 0,
+			routes: [
+				{ key: '1', title: 'Horoscope' },
+				{ key: '2', title: 'Map'},
+				{ key: '3', title: 'About'}
+			],
+			dailyHoroscope: this.props.dailyHoroscope,
+			horoscopeTone: this.props.horoscopeTone,
+			astrologicalSign: this.props.astrologicalSign
+		}
+	}
+
+
+	render() {
 		return (
 			<View style={styles.container}>
-				<View style={styles.homebutton}>
-					<Button onPress={this._goToAbout} title="About"/>
-					<Button onPress={this._goToHoroscope} title="Horoscope"/>
-					<Button onPress={this._goToMap} title="Map" />
-				</View>
+				<TabViewAnimated 
+					style = {styles.container}
+					navigationState = {this.state}
+					renderScene = {this._renderScene}
+					onRequestChangeTab = {this._handleChangeTab}
+					renderFooter = {this._renderFooter}
+				/>
 			</View>
 		)
 	}
 
-	_goToHoroscope = () => {
-		this.props.navigator.push(Router.getRoute('horoscope'))
+	_renderScene = ({route}) => {
+		switch(route.key) {
+		case '1':
+			return <HoroscopePage dailyHoroscope={this.props.dailyHoroscope} sign={this.props.astrologicalSign}/>
+			break
+		case '2':
+			return (<View style={styles.page}><Text> 2 </Text></View>)
+			break
+		default:
+			return null
+		}
 	}
 
-	_goToAbout = () => {
-		this.props.navigator.push(Router.getRoute('about'))
+	_renderLabel = (scene: Scene) => {
+    	const label = scene.route.title
+    	switch(label) {
+    	case 'Horoscope':
+    		return <Image style={{height:38, width:30}} source={require('../assets/icons/crystal-ball.png')} />
+    		break
+		case 'Map':
+			return <Icon size={30} name="map-o" />
+			break
+		case 'About':
+			return <Icon size={35} name="question" />
+			break
+		default:
+			break
+    	}
 	}
 
-	_goToMap = () => {
-		this.props.navigator.push(Router.getRoute('map'))
+	_handleChangeTab = (index) => {
+		this.setState({ index })
 	}
+
+	_renderFooter = (props) => {
+		return <TabBar {...props} 
+				renderLabel={this._renderLabel} 
+				borderStyle={{color: "#00000"}} 
+				labelStyle={{color:"#ffffff"}} 
+				indicatorStyle={{backgroundColor: "#ffffff"}}
+				/>
+	}
+
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loading: {
+    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  homebutton: {
-  	flex: 1,
-  	flexDirection: 'column',
-  	justifyContent: 'flex-end',
-  	bottom: 100
-  }
+  page: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

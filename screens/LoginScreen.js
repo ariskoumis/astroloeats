@@ -9,7 +9,6 @@ import {
 		Picker
 		}	from 'react-native';
 import Expo from 'expo';
-import Router from '../navigation/Router';
 
 
 export default class LoginScreen extends React.Component {
