@@ -24,9 +24,9 @@ export default class HoroscopeTabView extends React.Component {
 				{ key: '2', title: 'Map'},
 				{ key: '3', title: 'About'}
 			],
-			horoscope: this.props.horoscope,
-			tone: this.props.tone,
-			sign: this.props.sign
+			horoscope: props.horoscope,
+			tone: props.tone,
+			sign: props.sign
 		}
 	}
 
@@ -49,7 +49,7 @@ export default class HoroscopeTabView extends React.Component {
 	_renderScene = ({route}) => {
 		switch(route.key) {
 		case '1':
-			return <HoroscopePage horoscope={this.props.horoscope} sign={this.props.sign}/>
+			return <HoroscopePage horoscope={this.props.horoscope} sign={this.props.sign} tone={this.props.tone}/>
 			break
 		case '2':
 			return (<View style={styles.page}><Text> 2 </Text></View>)

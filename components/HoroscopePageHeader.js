@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
 	},
 	leftPadding: {
 		flexDirection: 'row',
-		flex: 1,
+		flex: .7,
 	},
 	currentDate: {
 		flex: 1

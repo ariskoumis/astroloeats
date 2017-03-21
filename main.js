@@ -39,8 +39,10 @@ class App extends React.Component {
         sign: sign
       })
 
+    // var horoscope = "You've always been grounded, but now you're even more balanced than usual. Your goals and efforts are in line with your values, and that's a great state of being. You can put real work into something that means a lot to you, and enjoy the success you achieve. Be prepared to work hard, because this charmed influence doesn't last long. At least you can be assured it's worth all the work you'll put in. Time to map out your painstaking route to the top."
+
     // this.setState({
-    //   horoscope: "ho",
+    //   horoscope: horoscope,
     //   tone: "yo",
     //   sign: "taurus"
     // })
