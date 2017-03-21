@@ -11,10 +11,17 @@ export default class HoroscopeScreen extends React.Component {
 	render () {
 		return (
 			<View style={[styles.page, { backgroundColor: '#ffffff' }]}>
-				<HoroscopePageHeader sign={this.props.sign} />			
-				<Text style={{color: "#000000"}}>
-					{this.props.dailyHoroscope} 
-				</Text>
+				<View style={{flex: .09}}>
+					<HoroscopePageHeader sign={this.props.sign} />			
+				</View>
+				<View style={styles.horoscope}>
+					<Text style={{color: "#000000"}}>
+						{this.props.horoscope} 
+					</Text>
+				</View>
+				<View style={styles.tone} >
+					<Text> hi </Text>
+				</View>
 			</View>
 		)	
 	}
@@ -24,8 +31,21 @@ export default class HoroscopeScreen extends React.Component {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
-  }
+  },
+  horoscope: {
+  	flex: .3,
+  	alignItems: 'center',
+  	backgroundColor: "#f9c26a",
+  	borderRadius: 10,
+  	paddingLeft: 5,
+  	paddingRight: 5
+  },
+  tone: {
+  	flex: .3,
+  	alignItems: 'center',
+  },
+
 });
 

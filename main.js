@@ -31,14 +31,20 @@ class App extends React.Component {
     var sign = await getAstrologicalSign()
     const response = await fetch(`http://theastrologer-api.herokuapp.com/api/horoscope/${sign}/today`)
     var horoscope = JSON.parse(response._bodyText).horoscope
-    var horoscopeTone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
+    var tone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
 
     this.setState({
-        dailyHoroscope: horoscope,
-        horoscopeTone: JSON.stringify(horoscopeTone),
-        astrologicalSign: sign
+        horoscope: horoscope,
+        tone: JSON.stringify(tone),
+        sign: sign
       })
-    }
+
+    // this.setState({
+    //   horoscope: "ho",
+    //   tone: "yo",
+    //   sign: "taurus"
+    // })
+  }
 
   render() {
     if (!this.state.loggedIn) {
@@ -49,7 +55,7 @@ class App extends React.Component {
     }
 
     return (
-      <HomeScreen dailyHoroscope={this.state.dailyHoroscope} horoscopeTone={this.state.horoscopeTone} astrologicalSign={this.state.astrologicalSign} />
+      <HomeScreen horoscope={this.state.horoscope} tone={this.state.tone} sign={this.state.sign} />
     )
   }
 
