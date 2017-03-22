@@ -3,8 +3,9 @@ import {
 	View,
 	StyleSheet,
 	Text,
-	Image
+	Image,
 } from 'react-native';
+import {Components} from 'expo'
 import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -12,26 +13,56 @@ import HoroscopePage from '../components/HoroscopePage';
 import MoodPage from '../components/MoodPage';
 import StatusBarBackground from '../components/StatusBarBackground';
 
+import AboutScreen from '../screens/AboutScreen';
+import MapScreen from '../screens/MapScreen';
+
+import getAstrologicalSign from '../utils/getAstrologicalSign';
+import decideFoods from '../utils/decideFoods';
 
 export default class HoroscopeTabView extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			screenIsReady: false,
+			appIsReady: false,
 			index: 0,
 			routes: [
 				{ key: '1', title: 'Horoscope' },
 				{ key: '2', title: 'Map'},
 				{ key: '3', title: 'About'}
 			],
-			horoscope: props.horoscope,
-			tone: props.tone,
-			sign: props.sign
+			horoscope: "",
+			tone: "",
+			sign: ""
 		}
 	}
 
+	async componentDidMount() {
+	    await this._loadContentAsync()
+	    this.setState({
+	      	appIsReady: true
+	    })
+  	}  
+
+  	_loadContentAsync = async () => {
+    	var sign = await getAstrologicalSign()
+    	const response = await fetch(`http://theastrologer-api.herokuapp.com/api/horoscope/${sign}/today`)
+    	var horoscope = JSON.parse(response._bodyText).horoscope
+    	var tone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
+    	var foods = decideFoods(tone)
+
+    	this.setState({
+	        horoscope: horoscope,
+	        tone: JSON.stringify(tone),
+	        sign: sign,
+	        foods: foods
+	    })
+    }
 
 	render() {
+		if (!this.state.appIsReady) {
+      		return <Components.AppLoading/>
+    	}
+
 		return (
 			<View style={styles.container}>
 				<StatusBarBackground />
@@ -49,10 +80,13 @@ export default class HoroscopeTabView extends React.Component {
 	_renderScene = ({route}) => {
 		switch(route.key) {
 		case '1':
-			return <HoroscopePage horoscope={this.props.horoscope} sign={this.props.sign} tone={this.props.tone}/>
+			return <HoroscopePage horoscope={this.state.horoscope} sign={this.state.sign} tone={this.state.tone} foods={this.state.foods}/>
 			break
 		case '2':
-			return (<View style={styles.page}><Text> 2 </Text></View>)
+			return <MapScreen />
+			break
+		case '3':
+			return <AboutScreen />
 			break
 		default:
 			return null

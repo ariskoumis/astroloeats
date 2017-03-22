@@ -8,8 +8,6 @@ import {
 } from 'react-native';
 import {
 	Components,
-	Location,
-	Permissions
 } from 'expo';
 
 var height = Dimensions.get('window').width
@@ -29,7 +27,7 @@ export default class MapScreen extends React.Component {
 	}
 
 	componentDidMount() {
- 		this._getCurrentLocation()
+		
 	}
 
 	static route = {
@@ -54,24 +52,6 @@ export default class MapScreen extends React.Component {
 		      	<Text style={styles.restaurantList}> Hi </Text>
 	      	</View>
 		)
-	}
-
-	_getCurrentLocation = async () => {
-		var { status } = await Permissions.askAsync(Permissions.LOCATION)
-		if (status === 'granted') {
-			var currentLocation = await Location.getCurrentPositionAsync({enableHighAccuracy: true})
-			this.setState({
-				region: {
-					latitude: currentLocation.coords.latitude,
-				 	longitude: currentLocation.coords.longitude,
-				 	latitudeDelta: 0.0922,
-	          		longitudeDelta: 0.0421
-			 	}
-			})
-		} else {
-			Alert.alert("Error", "Please enable location services.")
-
-		}
 	}
 }
 

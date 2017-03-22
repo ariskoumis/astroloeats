@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 
 import HoroscopePageHeader from '../components/HoroscopePageHeader';
-import FoodSuggestions from '../components/FoodSuggestions';
 
 export default class HoroscopeScreen extends React.Component {
 	constructor(props) {
@@ -14,7 +13,8 @@ export default class HoroscopeScreen extends React.Component {
 		this.state = {
 			sign: props.sign,
 			horoscope: props.horoscope,
-			tone: props.tone
+			tone: props.tone,
+			foods: props.foods
 		}
 	}
 	render () {
@@ -40,12 +40,11 @@ export default class HoroscopeScreen extends React.Component {
 					<Text style={{fontWeight: "bold", fontSize: 16}}>
 						Food Suggestions
 					</Text>
-					<FoodSuggestions tone={this.state.tone} />
+					<Text> {this.state.foods[0]}, {this.state.foods[1]}, {this.state.foods[2]} </Text>
 				</View>
 			</View>
 		)   
 	}
-	
 }
 
 const styles = StyleSheet.create({

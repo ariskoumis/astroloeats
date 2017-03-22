@@ -12,8 +12,9 @@ export default class HoroscopePageHeader extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			sign: capitalizeFirst(this.props.sign)
+			sign: capitalizeFirst(props.sign)
 		}
+
 	}
 
 	componentDidMount() {
