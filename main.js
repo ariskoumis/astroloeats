@@ -14,21 +14,31 @@ class App extends React.Component {
   constructor() {
     super() 
     this.state = {
-      loggedIn: false
+      loggedIn: false,
+      region: {
+        longitude: 0,
+        latitude: 0
+      }
     }
   }
 
   render() {
-    if (!this.state.loggedIn) {
-      return <LoginScreen onLogIn={this._onLogIn}/>
+    if (!this.d.loggedIn) {
+      return <LoginScreen onLogIn={this.onLogIn} handleRegionUpdate={this._handleRegionUpdate}/>
     } 
 
     return (
-      <HomeScreen horoscope={this.state.horoscope} tone={this.state.tone} sign={this.state.sign} />
+      <HomeScreen region={this.state.region}/>
     )
   }
 
-  _onLogIn = () => {
+  _handleRegionUpdate = (newRegion) => {
+    this.setState({
+      region: newRegion
+    })
+  }
+
+  onLogIn = () => {
     this.setState({
       loggedIn: true
     })  

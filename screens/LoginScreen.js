@@ -23,8 +23,8 @@ export default class LoginScreen extends React.Component {
 		}
 	}
 
-	componentWillMount() {
-		if (this._loggedIn()) {
+	async componentWillMount() {
+		if (await this._loggedIn()) {
 			this.props.onLogIn()
 		}
 	}
@@ -40,13 +40,16 @@ export default class LoginScreen extends React.Component {
 	}
 
 	_loggedIn = async () => {
-		AsyncStorage.getItem('birthday', (value) => {
-			if (value==undefined) {
-				return false
+		var returnVal = true
+		await AsyncStorage.getItem('birthday', (value) => {
+			if (!value) {
+				returnVal = false
 			}
-
-			return true
 		})
+
+		console.log(returnVal)
+
+		return returnVal
 	}
 
 	_handleFacebookLogin = async () => {
@@ -72,13 +75,11 @@ export default class LoginScreen extends React.Component {
 		var { status } = await Permissions.askAsync(Permissions.LOCATION)
 		if (status === 'granted') {
 			var currentLocation = await Location.getCurrentPositionAsync({enableHighAccuracy: true})
-			this.setState({
-				region: {
-					latitude: currentLocation.coords.latitude,
-				 	longitude: currentLocation.coords.longitude,
-				 	latitudeDelta: 0.0922,
-	          		longitudeDelta: 0.0421
-			 	}
+			this.props.handleRegionUpdate({
+				latitude: currentLocation.coords.latitude,
+			 	longitude: currentLocation.coords.longitude,
+			 	latitudeDelta: 0.0922,
+          		longitudeDelta: 0.0421
 			})
 			this.props.onLogIn()
 		} else {

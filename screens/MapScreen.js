@@ -13,21 +13,18 @@ import {
 var height = Dimensions.get('window').width
 
 export default class MapScreen extends React.Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
+		console.log(props)
 
 		this.state = {
 			region: {
-				latitude: 0,
-				longitude: 0,
+				latitude: props.region.latitude,
+				longitude: props.region.longitude,
 				latitudeDelta: 0.0922,
 	          	longitudeDelta: 0.0421	
 			}
 		}
-	}
-
-	componentDidMount() {
-		
 	}
 
 	static route = {

@@ -22,6 +22,7 @@ import decideFoods from '../utils/decideFoods';
 export default class HoroscopeTabView extends React.Component {
 	constructor(props) {
 		super(props)
+		console.log(props)
 		this.state = {
 			appIsReady: false,
 			index: 0,
@@ -32,7 +33,8 @@ export default class HoroscopeTabView extends React.Component {
 			],
 			horoscope: "",
 			tone: "",
-			sign: ""
+			sign: "",
+			region: props.region
 		}
 	}
 
@@ -49,6 +51,9 @@ export default class HoroscopeTabView extends React.Component {
     	var horoscope = JSON.parse(response._bodyText).horoscope
     	var tone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
     	var foods = decideFoods(tone)
+    	var [food1, food2, food3] = foods
+		var restaurants = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/yelpSearch?keyword=${encodeURI(food1)}%20${encodeURI(food2)}%20${encodeURI(food3)}`)
+
 
     	this.setState({
 	        horoscope: horoscope,
@@ -83,7 +88,7 @@ export default class HoroscopeTabView extends React.Component {
 			return <HoroscopePage horoscope={this.state.horoscope} sign={this.state.sign} tone={this.state.tone} foods={this.state.foods}/>
 			break
 		case '2':
-			return <MapScreen />
+			return <MapScreen region={this.state.region}/>
 			break
 		case '3':
 			return <AboutScreen />
