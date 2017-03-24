@@ -15,17 +15,64 @@ import Expo, {
 
 
 export default class LoginScreen extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			birthMonth: "6",
-			birthDay: "15",
-		}
+	constructor() {
+		super()
+		this._handleGuestLogin = this._handleGuestLogin.bind(this)
+		this._requestLocation = this._requestLocation.bind(this)
+		this._handleFacebookLogin = this._handleFacebookLogin.bind(this)
 	}
 
 	async componentWillMount() {
 		if (await this._loggedIn()) {
 			this.props.onLogIn()
+		}
+	}
+
+	
+
+	async _loggedIn() {
+		var value = await AsyncStorage.getItem('birthday')
+		console.log(value)
+		if (!value) {
+			return false
+		}
+
+		return true
+	}
+
+	async _handleFacebookLogin() {
+		const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync('101465287056746', {
+		permissions: ['public_profile', 'user_birthday'],
+		behavior:'web'
+		})
+		
+		if (type === 'success') {
+      		const response = await fetch( `https://graph.facebook.com/me?access_token=${token}&fields=id,name,birthday`)
+      		const userInfo = await response.json()
+      		await AsyncStorage.multiSet([['name', userInfo.name], ['birthday', userInfo.birthday]])
+      		Alert.alert('Logged in!', `Hi ${userInfo.name}!`)
+      		this._requestLocation()
+		}
+	}
+
+	_handleGuestLogin() {
+		this._requestLocation()
+	}
+
+	async _requestLocation() {
+		var { status } = await Permissions.askAsync(Permissions.LOCATION)
+		if (status === 'granted') {
+			var currentLocation = await Location.getCurrentPositionAsync({enableHighAccuracy: true})
+			this.props.handleRegionUpdate({
+				latitude: currentLocation.coords.latitude,
+			 	longitude: currentLocation.coords.longitude,
+			 	latitudeDelta: 0,
+          		longitudeDelta: 0
+			})
+			this.props.onLogIn()
+		} else {
+			await Alert.alert("Error", "Please enable location services.")
+			this._requestLocation()
 		}
 	}
 
@@ -37,55 +84,6 @@ export default class LoginScreen extends React.Component {
 				<Button title="Continue as Guest" onPress={this._handleGuestLogin} />
 			</View>
 		)
-	}
-
-	_loggedIn = async () => {
-		var returnVal = true
-		await AsyncStorage.getItem('birthday', (value) => {
-			if (!value) {
-				returnVal = false
-			}
-		})
-
-		console.log(returnVal)
-
-		return returnVal
-	}
-
-	_handleFacebookLogin = async () => {
-		const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync('101465287056746', {
-		permissions: ['public_profile', 'user_birthday'],
-		behavior:'web'
-		})
-		
-		if (type === 'success') {
-      		const response = await fetch( `https://graph.facebook.com/me?access_token=${token}&fields=id,name,birthday`)
-      		const userInfo = await response.json()
-      		Alert.alert('Logged in!', `Hi ${userInfo.name}!`)
-      		await AsyncStorage.multiSet([['name', userInfo.name], ['birthday', userInfo.birthday]])
-      		this._requestLocation()
-		}
-	}
-
-	_handleGuestLogin = () => {
-		this._requestLocation()
-	}
-
-	_requestLocation = async () => {
-		var { status } = await Permissions.askAsync(Permissions.LOCATION)
-		if (status === 'granted') {
-			var currentLocation = await Location.getCurrentPositionAsync({enableHighAccuracy: true})
-			this.props.handleRegionUpdate({
-				latitude: currentLocation.coords.latitude,
-			 	longitude: currentLocation.coords.longitude,
-			 	latitudeDelta: 0.0922,
-          		longitudeDelta: 0.0421
-			})
-			this.props.onLogIn()
-		} else {
-			await Alert.alert("Error", "Please enable location services.")
-			this._requestLocation()
-		}
 	}
 }
 

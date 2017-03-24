@@ -8,7 +8,7 @@ import {
 
 import capitalizeFirst from '../utils/capitalizeFirst';
 
-export default class HoroscopePageHeader extends React.Component {
+export default class HoroscopeScreenHeader extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -21,28 +21,6 @@ export default class HoroscopePageHeader extends React.Component {
 		this.setState({
 			description: this._getDescription()
 		})
-	}
-
-	render() {
-		return (
-			<View style={[styles.container, {paddingTop: 10}]}>
-				<View style={styles.leftPadding}>
-					
-				</View>
-				<View style={styles.signInfo}>
-					<View style={{flexDirection:"row",alignItems:"center"}}>
-						{this._getIcon()}
-						<View style={{alignItems:'center'}}>
-							<Text style={{fontSize: 30}}> {this.state.sign} </Text>
-							<Text style={{fontStyle: "italic", fontSize: 20}}> {this.state.description} </Text>
-						</View>
-					</View>
-				</View>
-				<View style={styles.currentDate} >
-					{this._getDate()}
-				</View>
-			</View>
-		)
 	}
 
 	_getIcon() {
@@ -141,6 +119,28 @@ export default class HoroscopePageHeader extends React.Component {
 			<Text style={{fontSize: 20}}>
 				{month}/{day}/{year}
 			</Text>
+		)
+	}
+
+	render() {
+		return (
+			<View style={[styles.container, {paddingTop: 10}]}>
+				<View style={styles.leftPadding}>
+					
+				</View>
+				<View style={styles.signInfo}>
+					<View style={{flexDirection:"row",alignItems:"center"}}>
+						{this._getIcon()}
+						<View style={{alignItems:'center'}}>
+							<Text style={{fontSize: 30}}> {this.state.sign} </Text>
+							<Text style={{fontStyle: "italic", fontSize: 20}}> {this.state.description} </Text>
+						</View>
+					</View>
+				</View>
+				<View style={styles.currentDate} >
+					{this._getDate()}
+				</View>
+			</View>
 		)
 	}
 }

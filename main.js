@@ -20,28 +20,31 @@ class App extends React.Component {
         latitude: 0
       }
     }
+
+    this.onLogIn = this.onLogIn.bind(this)
+    this._handleRegionUpdate = this._handleRegionUpdate.bind(this)
   }
 
-  render() {
-    if (!this.d.loggedIn) {
-      return <LoginScreen onLogIn={this.onLogIn} handleRegionUpdate={this._handleRegionUpdate}/>
-    } 
-
-    return (
-      <HomeScreen region={this.state.region}/>
-    )
-  }
-
-  _handleRegionUpdate = (newRegion) => {
+  _handleRegionUpdate(newRegion) {
     this.setState({
       region: newRegion
     })
   }
 
-  onLogIn = () => {
+  onLogIn() {
     this.setState({
       loggedIn: true
     })  
+  }
+
+  render() {
+    if (!this.state.loggedIn) {
+      return <LoginScreen onLogIn={this.onLogIn} handleRegionUpdate={this._handleRegionUpdate}/>
+    }
+
+    return (
+      <HomeScreen region={this.state.region}/>
+    )
   }
 
 }
