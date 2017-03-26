@@ -32,7 +32,6 @@ export default class LoginScreen extends React.Component {
 
 	async _loggedIn() {
 		var value = await AsyncStorage.getItem('birthday')
-		console.log(value)
 		if (!value) {
 			return false
 		}
