@@ -52,22 +52,29 @@ export default class HoroscopeTabView extends React.Component {
   	}  
 
   	async _loadContentAsync() {
+  		//User's Zodiac Sign
     	var sign = await getAstrologicalSign()
 
+    	//Call Horoscope API
     	const horoscopeRequest = await fetch(`http://sandipbgt.com/theastrologer/api/horoscope/${sign}/today`)
     	var horoscope = JSON.parse(horoscopeRequest._bodyText).horoscope
+    	//Horoscope API ends with a signature from api creator, signature starts with (c)
+    	horoscope = horoscope.split('(c)')[0]
 
+    	//Call Watson Tone Analyzer
     	var tone = (await fetch(`https://7k2wjhbn9c.execute-api.us-west-1.amazonaws.com/prod/analyzeText?horoscope=${encodeURI(horoscope)}`))._bodyInit
-    	var foods = decideFoods(tone)
 
+    	//Get User Location
     	var currentLocation = await Location.getCurrentPositionAsync()
 		var region = {
 			latitude: currentLocation.coords.latitude,
 		 	longitude: currentLocation.coords.longitude,
-		 	latitudeDelta: 0,
-      		longitudeDelta: 0
+		 	latitudeDelta: 0.0922,
+          	longitudeDelta: 0.0421,
 		}
 
+		//Choose Foods, Call Yelp API
+		var foods = decideFoods(tone)
     	var [food1, food2, food3] = foods
 		var restaurantRequest = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}%20${encodeURI(food2)}%20${encodeURI(food3)}`)
 		var restaurants = JSON.parse(JSON.parse(restaurantRequest._bodyInit)).businesses

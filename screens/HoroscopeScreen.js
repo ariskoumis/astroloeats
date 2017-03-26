@@ -6,19 +6,9 @@ import {
 } from 'react-native';
 
 import HoroscopeScreenHeader from '../components/HoroscopeScreenHeader';
-import MoodAnalytics from '../components/MoodAnalytics';
+import MoodGraph from '../components/MoodGraph';
 
 export default class HoroscopeScreen extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			sign: props.sign,
-			horoscope: props.horoscope,
-			tone: props.tone,
-			foods: props.foods
-		}
-	}
-
 	render() {
 		return (
 			
@@ -38,7 +28,7 @@ export default class HoroscopeScreen extends React.Component {
 					<Text style={{fontWeight: "bold", fontSize: 16}}>
 						Mood Prediction
 					</Text>
-					<MoodAnalytics />
+					<MoodGraph tone={this.props.tone} style={{flex:1}}/>
 				</View>
 				<View style={styles.reccomendation}>
 					<Text style={{fontWeight: "bold", fontSize: 16}}>

@@ -12,6 +12,7 @@
     "expo": "^14.0.2",
     "react": "~15.4.0",
     "react-native": "https://github.com/exponent/react-native/archive/sdk-14.0.0.tar.gz",
+    "react-native-collapsible": "^0.8.0",
     "react-native-maps": "^0.12.4",
     "react-native-pathjs-charts": "0.0.26",
     "react-native-tab-view": "0.0.57"
