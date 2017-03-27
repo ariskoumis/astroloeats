@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 
 export default class RestaurantListElement extends React.Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
+		console.log(props)
 		this.handleRegionUpdate = this.handleRegionUpdate.bind(this)
 	}
 
@@ -39,8 +40,8 @@ export default class RestaurantListElement extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
-		padding: 5
-		// alignItems: 'center'
+		padding: 10,
+		borderStyle: 'solid'
 	},
 	info: {
 		flexDirection: 'column',
