@@ -3,14 +3,23 @@ import {
 	StyleSheet,
 	View,
 	Text,
-	TouchableOpacity
+	TouchableOpacity,
 } from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+
+import parseDate from '../utils/parseDate';
+
 
 export default class AboutScreen extends React.Component {
-	static route = {
-		navigationBar: {
-			title: "About"
+	constructor() {
+		super()
+		this.state = {
+			isDateTimePickerVisible: false
 		}
+	}
+
+	async _handleDatePicked(date) {
+		this.props.handleBirthdayUpdate(parseDate(date))
 	}
 
 	render() {
@@ -22,6 +31,18 @@ export default class AboutScreen extends React.Component {
 				<TouchableOpacity onPress={this.props.handleLogout}>
 					<Text> Logout </Text>
 				</TouchableOpacity>
+				<TouchableOpacity onPress={() => this.setState({isDateTimePickerVisible: true})}>
+					<Text> Update Birthday </Text>
+				</TouchableOpacity>
+				<DateTimePicker
+					isVisible={this.state.isDateTimePickerVisible}
+					onConfirm={this._handleDatePicked}
+					onCancel={() => this.setState({isDateTimePickerVisible: false})}
+		        />
+		        <Text> Project Created by Aris Koumis </Text>
+		        <Text> Insert Github Here </Text>
+	        	<Text> Insert Contact Email Here </Text>
+	        	<Text> Insert Linkedin </Text> 
 			</View>
 		)
 	}

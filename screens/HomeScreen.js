@@ -98,7 +98,7 @@ export default class HoroscopeTabView extends React.Component {
 			return <MapScreen region={this.state.region} restaurants={this.state.restaurants}/>
 			break
 		case '3':
-			return <AboutScreen handleLogout={this.props.handleLogout}/>
+			return <AboutScreen handleBirthdayUpdate={this.handleBirthdayUpdate} handleLogout={this.props.handleLogout}/>
 			break
 		default:
 			return null
@@ -120,6 +120,11 @@ export default class HoroscopeTabView extends React.Component {
 		default:
 			break
     	}
+	}
+
+	async handleBirthdayUpdate(date) {
+		await AsyncStorage.setItem('birthday', date)
+		console.log("here")
 	}
 
 	_handleChangeTab(index) {

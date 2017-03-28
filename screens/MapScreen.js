@@ -10,6 +10,7 @@ import {
 import {
 	Components,
 } from 'expo';
+
 import RestaurantListElement from '../components/RestaurantListElement';
 
 var height = Dimensions.get('window').width
@@ -39,9 +40,15 @@ export default class MapScreen extends React.Component {
 			        }}
 			        region={this.state.region}
 		        >
+			        <Components.MapView.Marker
+				        image={require('../assets/icons/green-pin.png')}
+				    	key={"Current Location"}
+				      	coordinate={this.props.region}
+			    	  	title={"Current Location"}
+			    	/>
 			        {this.props.restaurants.map(restaurant => (
 					    <Components.MapView.Marker
-					    	key={restaurant.name}
+					    	key={restaurant.coordinates.longitude}
 					      	coordinate={restaurant.coordinates}
 				    	  	title={restaurant.name}
 				    	/>
