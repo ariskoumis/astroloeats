@@ -30,7 +30,7 @@ export default class MapScreen extends React.Component {
 		return (
 			<View style={styles.container}>
 				<Components.MapView
-			        style={styles.map}
+			        style={{flex: 1}}
 			        initialRegion={{
 			          latitude: this.props.region.latitude,
 			          longitude: this.props.region.longitude,
@@ -51,7 +51,7 @@ export default class MapScreen extends React.Component {
 		      		style = {{flex: 1}}
 		      		dataSource = {this.state.restaurantDataSource}
 		      		renderRow = {(restaurant) => 
-		      			<RestaurantListElement style={styles.restaurantListElement} restaurant={restaurant} handleRegionUpdate={this.handleRegionUpdate}/>
+		      			<RestaurantListElement restaurant={restaurant} handleRegionUpdate={this.handleRegionUpdate}/>
 		      		}
 	      		/>
 	      	</View>
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		justifyContent: 'center'
 	},
-	map: {
-		flex: 1,
-	},
 	restaurantList: {
 		height: height * .6
 	},
 	restaurantListElement: {
 		flex: .2
+	},
+	map : {
+		flex: 1
 	}
 })

@@ -9,7 +9,6 @@ import {
 
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
-import TestScreen from './screens/TestScreen';
 
 class App extends React.Component {
   constructor() {
