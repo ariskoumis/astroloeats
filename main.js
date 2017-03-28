@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Alert,
+  AsyncStorage
 } from 'react-native';
 
 import HomeScreen from './screens/HomeScreen';
@@ -23,6 +24,7 @@ class App extends React.Component {
 
     this.onLogIn = this.onLogIn.bind(this)
     this._handleRegionUpdate = this._handleRegionUpdate.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   _handleRegionUpdate(newRegion) {
@@ -37,13 +39,20 @@ class App extends React.Component {
     })  
   }
 
+  async handleLogout() {
+    await AsyncStorage.multiRemove(['name', 'birthday'])
+    this.setState({
+      loggedIn: false
+    })
+  }
+
   render() {
     if (!this.state.loggedIn) {
       return <LoginScreen onLogIn={this.onLogIn} handleRegionUpdate={this._handleRegionUpdate}/>
     }
 
     return (
-      <HomeScreen region={this.state.region}/>
+      <HomeScreen region={this.state.region} handleLogout={this.handleLogout}/>
     )
   }
 

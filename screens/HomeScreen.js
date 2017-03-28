@@ -98,7 +98,7 @@ export default class HoroscopeTabView extends React.Component {
 			return <MapScreen region={this.state.region} restaurants={this.state.restaurants}/>
 			break
 		case '3':
-			return <AboutScreen />
+			return <AboutScreen handleLogout={this.props.handleLogout}/>
 			break
 		default:
 			return null

@@ -3,6 +3,7 @@ import {
 	StyleSheet,
 	View,
 	Text,
+	TouchableOpacity
 } from 'react-native';
 
 export default class AboutScreen extends React.Component {
@@ -18,6 +19,9 @@ export default class AboutScreen extends React.Component {
 				<Text> About </Text>
 				<Text> AstrologEats decides what you should eat based on your daily horoscope! Using IBM Watson's Tone Analyzer, AstrologEats is able to detect the overall tone of your horoscope and uses it to suggest you a resturant that complements your horoscope!
 				</Text>
+				<TouchableOpacity onPress={this.props.handleLogout}>
+					<Text> Logout </Text>
+				</TouchableOpacity>
 			</View>
 		)
 	}
