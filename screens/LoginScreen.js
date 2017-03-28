@@ -6,20 +6,35 @@ import {
 		Button,
 		Alert,
 		AsyncStorage,
-		Picker
-		}	from 'react-native';
+		Picker,
+		TouchableOpacity,
+		TextInput
+} from 'react-native';
 import Expo, {
 	Location,
 	Permissions
 } from 'expo';
+import Modal from 'react-native-modalbox';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
+import parseDate from '../utils/parseDate';
 
 export default class LoginScreen extends React.Component {
 	constructor() {
 		super()
+		this.state = {
+			isDateTimePickerVisible: false,
+			guestBirthday: "",
+			guestName: "Name"
+		}
+
 		this._handleGuestLogin = this._handleGuestLogin.bind(this)
 		this._requestLocation = this._requestLocation.bind(this)
 		this._handleFacebookLogin = this._handleFacebookLogin.bind(this)
+		this._showDateTimePicker = this._showDateTimePicker.bind(this)
+		this._hideDateTimePicker = this._hideDateTimePicker.bind(this)
+		this._handleDatePicked = this._handleDatePicked.bind(this)
+		this._handleGuestLogin = this._handleGuestLogin.bind(this)
 	}
 
 	async componentWillMount() {
@@ -49,13 +64,12 @@ export default class LoginScreen extends React.Component {
       		const response = await fetch( `https://graph.facebook.com/me?access_token=${token}&fields=id,name,birthday`)
       		const userInfo = await response.json()
       		await AsyncStorage.multiSet([['name', userInfo.name], ['birthday', userInfo.birthday]])
+      		console.log(userInfo.birthday)
+      		console.log(typeof userInfo.birthday)
       		Alert.alert('Logged in!', `Hi ${userInfo.name}!`)
       		this._requestLocation()
-		}
-	}
 
-	_handleGuestLogin() {
-		this._requestLocation()
+		}
 	}
 
 	async _requestLocation() {
@@ -75,13 +89,62 @@ export default class LoginScreen extends React.Component {
 		}
 	}
 
+	_showDateTimePicker() {
+		this.setState ({
+			isDateTimePickerVisible: true
+		})
+	}
+
+	_hideDateTimePicker() {
+		this.setState({
+			isDateTimePickerVisible: false
+		})
+	}
+
+	_handleDatePicked(date) {
+		this._hideDateTimePicker()
+
+		this.setState({
+			guestBirthday: parseDate(date)
+		})
+	}
+
+	async _handleGuestLogin() {
+		await AsyncStorage.multiSet([['name', this.state.guestName], ['birthday', this.state.guestBirthday]])
+		this._requestLocation()
+	}
+
+
+
 	render() {
 		return (
 			<View style={styles.container}>
 				<Button title="Login with Facebook" onPress={this._handleFacebookLogin} />
 				<Text> OR </Text>
-				<Button title="Continue as Guest" onPress={this._handleGuestLogin} />
+				<Button title="Continue as Guest" onPress={()=>this.refs.modal1.open()} />
+				<Modal style={styles.container} ref="modal1" backdrop={true}  position={"top"}>
+					<Text>Modal on top</Text>
+					<TouchableOpacity onPress={this._showDateTimePicker}>
+						<Text>Birthday</Text>
+					</TouchableOpacity>
+					<Button title="Test" onPress={()=>console.log(this.state.guestBirthday + " " + typeof this.state.guestBirthday)} />
+					<DateTimePicker
+			          isVisible={this.state.isDateTimePickerVisible}
+			          onConfirm={this._handleDatePicked}
+			          onCancel={this._hideDateTimePicker}
+			        />
+			        <TextInput
+			        	style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+			        	onChangeText={(text) => this.setState({guestName: text})}
+			        	value={this.state.guestName}
+		        	/>
+		        	<TouchableOpacity onPress={this._handleGuestLogin}>
+						<Text>Login</Text>
+					</TouchableOpacity>
+				</Modal>
 			</View>
+
+			
 		)
 	}
 }
