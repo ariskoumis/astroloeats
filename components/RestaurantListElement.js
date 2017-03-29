@@ -4,10 +4,13 @@ import {
 	View,
 	TouchableOpacity,
 	Image,
-	StyleSheet
+	StyleSheet,
+	Linking,
+	Platform
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/Foundation';
+import Phone from 'react-native-communications';
 
 export default class RestaurantListElement extends React.Component {
 	constructor(props) {
@@ -16,6 +19,42 @@ export default class RestaurantListElement extends React.Component {
 			collapsed: true
 		}
 		this.handleFocus = this.handleFocus.bind(this)
+		this.handleRestaurantCall = this.handleRestaurantCall.bind(this)
+		this.handleWebsite = this.handleWebsite.bind(this)
+		this.handleDirections = this.handleDirections.bind(this)
+
+	}
+
+	handleFocus() {
+		var newRegion = {
+			longitude: this.props.restaurant.coordinates.longitude,
+			latitude: this.props.restaurant.coordinates.latitude,
+			latitudeDelta: 0.0922,
+          	longitudeDelta: 0.0421,
+		}
+		this.setState({collapsed: !this.state.collapsed})
+		this.props.handleRegionUpdate(newRegion)
+	}
+
+	handleRestaurantCall() {
+		var number = this.props.restaurant.phone
+		Phone.phonecall(number, true)
+	
+	}
+
+	handleDirections() {
+		var address=this.props.restaurant.location.display_address[0].split(" ").join("+")
+		var city=this.props.restaurant.location.city
+
+		if (Platform.OS == "ios") {
+			Linking.openURL('https://www.maps.apple.com/?q=' + address + '+' + city).catch(err => console.error('An error occurred', err));			
+		} else {
+			Linking.openURL('https://www.google.com/maps/search/' + address + '+' + city).catch(err => console.error('An error occurred', err));	
+		}
+	}
+
+	handleWebsite() {
+		Linking.openURL(this.props.restaurant.url).catch(err => console.error('An error occurred', err));
 	}
 
 	render() {
@@ -30,34 +69,25 @@ export default class RestaurantListElement extends React.Component {
 				</TouchableOpacity>
 		        <Collapsible collapsed={this.state.collapsed} align="center">
 		        	<View style={styles.collapsible}>
-		        		<View style={styles.collapsibleItem}>
-		        			<Icon size={30} name="map" />
-		        			<Text> Directions </Text>
-	        			</View>
-	        			<View style={styles.collapsibleItem}>
+		        		<TouchableOpacity onPress={this.handleRestaurantCall} style={styles.collapsibleItem}>
 		        			<Icon size={30} name="telephone" />
 		        			<Text> Call </Text>
-	        			</View>
-	        			<View style={styles.collapsibleItem}>
+	        			</TouchableOpacity>
+		        		<TouchableOpacity onPress={this.handleDirections} style={styles.collapsibleItem}>
+		        			<Icon size={30} name="map" />
+		        			<Text> Directions </Text>
+	        			</TouchableOpacity>
+	        			<TouchableOpacity onPress={this.handleWebsite} style={styles.collapsibleItem}>
 		        			<Icon size={30} name="web" />
 		        			<Text> Website </Text>
-	        			</View>
+	        			</TouchableOpacity>
 	        		</View>
 		        </Collapsible>
 	        </View>
 		)
 	}
 
-	handleFocus() {
-		var newRegion = {
-			longitude: this.props.restaurant.coordinates.longitude,
-			latitude: this.props.restaurant.coordinates.latitude,
-			latitudeDelta: 0.0922,
-          	longitudeDelta: 0.0421,
-		}
-		this.setState({collapsed: !this.state.collapsed})
-		this.props.handleRegionUpdate(newRegion)
-	}
+	
 }
 
 const styles = StyleSheet.create({
