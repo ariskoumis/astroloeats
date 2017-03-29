@@ -16,9 +16,12 @@ export default class AboutScreen extends React.Component {
 		this.state = {
 			isDateTimePickerVisible: false
 		}
+		this._handleDatePicked = this._handleDatePicked.bind(this)
 	}
 
-	async _handleDatePicked(date) {
+	_handleDatePicked(date) {
+		console.log(date)
+		this.setState({isDateTimePickerVisible: false})
 		this.props.handleBirthdayUpdate(parseDate(date))
 	}
 

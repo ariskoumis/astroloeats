@@ -4,6 +4,7 @@ import {
 	StyleSheet,
 	Text,
 	Image,
+	AsyncStorage
 } from 'react-native';
 import {
 	Components,
@@ -42,6 +43,7 @@ export default class HoroscopeTabView extends React.Component {
 		this._renderFooter = this._renderFooter.bind(this)
 		this._loadContentAsync = this._loadContentAsync.bind(this)
 		this._renderScene = this._renderScene.bind(this)
+		this.handleBirthdayUpdate = this.handleBirthdayUpdate.bind(this)
 	}
 
 	async componentDidMount() {
@@ -123,8 +125,15 @@ export default class HoroscopeTabView extends React.Component {
 	}
 
 	async handleBirthdayUpdate(date) {
+		this.setState({
+	      	appIsReady: false
+	    })
 		await AsyncStorage.setItem('birthday', date)
-		console.log("here")
+		await this._loadContentAsync()
+	    this.setState({
+	      	appIsReady: true,
+	      	index: 0
+	    })
 	}
 
 	_handleChangeTab(index) {
