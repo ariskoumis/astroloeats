@@ -28,15 +28,13 @@ export default class LoginScreen extends React.Component {
 		
 		this.state = {
 			isDateTimePickerVisible: false,
-			guestBirthday: "",
-			guestName: "Name"
+			guestBirthday: "11/11/2011",
+			guestName: "John Doe"
 		}
 
 		this._handleGuestLogin = this._handleGuestLogin.bind(this)
 		this._requestLocation = this._requestLocation.bind(this)
 		this._handleFacebookLogin = this._handleFacebookLogin.bind(this)
-		this._showDateTimePicker = this._showDateTimePicker.bind(this)
-		this._hideDateTimePicker = this._hideDateTimePicker.bind(this)
 		this._handleDatePicked = this._handleDatePicked.bind(this)
 		this._handleGuestLogin = this._handleGuestLogin.bind(this)
 	}
@@ -93,22 +91,10 @@ export default class LoginScreen extends React.Component {
 		}
 	}
 
-	_showDateTimePicker() {
-		this.setState ({
-			isDateTimePickerVisible: true
-		})
-	}
-
-	_hideDateTimePicker() {
-		this.setState({
-			isDateTimePickerVisible: false
-		})
-	}
 
 	_handleDatePicked(date) {
-		this._hideDateTimePicker()
-
 		this.setState({
+			isDateTimePickerVisible: false,
 			guestBirthday: parseDate(date)
 		})
 	}
@@ -117,8 +103,6 @@ export default class LoginScreen extends React.Component {
 		await AsyncStorage.multiSet([['name', this.state.guestName], ['birthday', this.state.guestBirthday]])
 		this._requestLocation()
 	}
-
-
 
 	render() {
 		return (
@@ -134,7 +118,7 @@ export default class LoginScreen extends React.Component {
 							<Text style={{color: "#ffffff"}}> Login with Facebook </Text>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity style={[styles.button, {marginBottom: 100, backgroundColor: "#a9a9a9"}]}  onPress={()=>this.refs.modal1.open()} >
+					<TouchableOpacity style={[styles.button, {marginBottom: 100, backgroundColor: "#a9a9a9"}]}  onPress={() => this.refs.modal1.open()} >
 						<Icon style={{marginLeft: 15}} size={30} name="user" color="#ffffff"/>
 						<View style={styles.buttonText}>
 							<Text style={{color: "#ffffff"}}> Continue as Guest </Text>
@@ -143,22 +127,34 @@ export default class LoginScreen extends React.Component {
 				</View>
 
 				<Modal style={styles.modal} ref="modal1" backdrop={true}  position={"top"}>
-					<Text>Modal on top</Text>
-					<TouchableOpacity onPress={this._showDateTimePicker}>
-						<Text>Birthday</Text>
+					<TouchableOpacity style={styles.exitModal}>
+						<Icon size={30} name={'times'} onPress={() => this.refs.modal1.close()}/>
 					</TouchableOpacity>
-					<DateTimePicker
-			          isVisible={this.state.isDateTimePickerVisible}
-			          onConfirm={this._handleDatePicked}
-			          onCancel={this._hideDateTimePicker}
-			        />
-			        <TextInput
-			        	style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-			        	onChangeText={(text) => this.setState({guestName: text})}
-			        	value={this.state.guestName}
-		        	/>
-		        	<TouchableOpacity onPress={this._handleGuestLogin}>
-						<Text>Login</Text>
+
+					<View style={{flex: 1, justifyContent: 'center', alignSelf: 'stretch', marginLeft: 10}}>
+						<Text style={styles.inputHeader}>Name</Text>
+				        <TextInput
+				        	style={styles.textInput}
+				        	selectTextOnFocus={true}
+				        	onChangeText={(text) => this.setState({guestName: text})}
+				        	value={this.state.guestName}
+			        	/>
+						<Text style={styles.inputHeader}>Birthday</Text>
+						<TextInput
+				        	style={styles.textInput}
+				        	onFocus={() => {this.setState ({isDateTimePickerVisible: true})}}
+				        	value={this.state.guestBirthday}
+			        	/>
+			        	<DateTimePicker
+				          isVisible={this.state.isDateTimePickerVisible}
+				          onConfirm={this._handleDatePicked}
+				          onCancel={() => this.setState({isDateTimePickerVisible: false})}
+				        />
+					</View>
+
+					<TouchableOpacity style={styles.guestLoginButton} activeOpacity={1}  onPress={this._handleGuestLogin}>
+						<Text style={{fontSize: 30}} style={{color: '#ffffff'}}>Login    </Text>
+						<Icon size={30} name="arrow-right" color="#ffffff" />
 					</TouchableOpacity>
 				</Modal>
 			</View>
@@ -178,7 +174,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modal: {
-  	flex: 1,
   	justifyContent: 'center',
   	alignItems: 'center'
   },
@@ -196,5 +191,33 @@ const styles = StyleSheet.create({
   },
   banner: {
   	justifyContent: 'flex-start'
+  },
+  textInput: {
+  	height: 40,
+  	borderColor: 'gray',
+  	borderWidth: 1,
+  	paddingLeft: 5,
+  	marginRight: 5
+  },
+  inputHeader: {
+  	fontSize: 30,
+  },
+  guestLoginButton: {
+  	flexDirection:'row', 
+  	alignSelf: 'flex-end',
+  	alignItems:'center', 
+  	justifyContent:'center', 
+  	marginRight: 5,
+  	marginBottom: 30,
+  	backgroundColor: "#00ff00",
+  	borderRadius: 5,
+  	padding: 5
+  },
+  exitModal: {
+  	flexDirection:'row', 
+  	alignSelf: 'flex-end',
+  	justifyContent:'center', 
+  	marginRight: 10,
+  	marginTop: 30,
   }
 });

@@ -7,8 +7,6 @@ export default getAstrologicalSign = async () => {
 	var birthday = new Date(await AsyncStorage.getItem('birthday'))
 	var month = birthday.getMonth() + 1 //January is 0, shifted up 1 for readability
 	var day = birthday.getDate()
-	console.log(month)
-	console.log(day)
 
 	if (month == 1) { 
 		if (day < 20) {
