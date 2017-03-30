@@ -77,12 +77,13 @@ export default class HoroscopeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   header: {
-	backgroundColor: '#F5FCFF',
+  	alignItems: 'flex-start',
+  	padding: 10
   },
   headerText: {
 	textAlign: 'center',
 	fontSize: 25,
-	fontWeight: '500',
+	fontWeight: '500'
   },
   content: {
 	backgroundColor: '#fff',

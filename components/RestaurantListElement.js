@@ -59,7 +59,7 @@ export default class RestaurantListElement extends React.Component {
 
 	render() {
 		return (
-			<View>
+			<View style={{flex:1}}>
 				<TouchableOpacity onPress={this.handleFocus} style={styles.container}>
 					<Image style={styles.image} source={{uri: this.props.restaurant.image_url}} />
 					<View style={styles.info}>

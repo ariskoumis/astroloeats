@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import Icon from 'react-native-vector-icons/Entypo';
 
 import parseDate from '../utils/parseDate';
 
@@ -25,6 +26,18 @@ export default class AboutScreen extends React.Component {
 		this.props.handleBirthdayUpdate(parseDate(date))
 	}
 
+	handleEmail() {
+		console.log('Hi')
+	}
+
+	handleLinkedin() {
+		console.log('Hi')
+	}
+
+	handleGithub() {
+		console.log('Hi')
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -42,10 +55,9 @@ export default class AboutScreen extends React.Component {
 					onConfirm={this._handleDatePicked}
 					onCancel={() => this.setState({isDateTimePickerVisible: false})}
 		        />
-		        <Text> Project Created by Aris Koumis </Text>
-		        <Text> Insert Github Here </Text>
-	        	<Text> Insert Contact Email Here </Text>
-	        	<Text> Insert Linkedin </Text> 
+		        <Icon onPress={this.handleEmail} size={30} name="mail" />
+		        <Icon onPress={this.handleLinkedin} size={30} name="linkedin" />
+		        <Icon onPress={this.handleGithub} size={30} name="github" />
 			</View>
 		)
 	}

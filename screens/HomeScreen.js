@@ -21,6 +21,7 @@ import StatusBarBackground from '../components/StatusBarBackground';
 
 import getAstrologicalSign from '../utils/getAstrologicalSign';
 import decideFoods from '../utils/decideFoods';
+import shuffleArray from '../utils/shuffleArray';
 
 export default class HoroscopeTabView extends React.Component {
 	constructor(props) {
@@ -78,8 +79,17 @@ export default class HoroscopeTabView extends React.Component {
 		//Choose Foods, Call Yelp API
 		var foods = decideFoods(tone)
     	var [food1, food2, food3] = foods
-		var restaurantRequest = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}%20${encodeURI(food2)}%20${encodeURI(food3)}`)
-		var restaurants = JSON.parse(JSON.parse(restaurantRequest._bodyInit)).businesses
+    	console.log(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}`)
+		var restaurantReq1 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}`)
+		var restaurantReq2 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food2)}`)
+		var restaurantReq3 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food3)}`)
+
+		restaurantReq1 = JSON.parse(JSON.parse(restaurantReq1._bodyInit)).businesses
+		restaurantReq2 = JSON.parse(JSON.parse(restaurantReq2._bodyInit)).businesses
+		restaurantReq3 = JSON.parse(JSON.parse(restaurantReq3._bodyInit)).businesses
+		var restaurants = [...restaurantReq1, ...restaurantReq2, ...restaurantReq3]
+
+		restaurants = shuffleArray(restaurants)
 		
     	this.setState({
 	        horoscope: horoscope,

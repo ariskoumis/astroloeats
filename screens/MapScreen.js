@@ -24,7 +24,6 @@ export default class MapScreen extends React.Component {
 			region: props.region,
 			restaurantDataSource: ds.cloneWithRows(props.restaurants)
 		}
-
 		this.handleRegionUpdate = this.handleRegionUpdate.bind(this)
 	}
 	render() {
@@ -48,7 +47,7 @@ export default class MapScreen extends React.Component {
 			    	/>
 			        {this.props.restaurants.map(restaurant => (
 					    <Components.MapView.Marker
-					    	key={restaurant.coordinates.longitude}
+					    	key={restaurant.coordinates.title}
 					      	coordinate={restaurant.coordinates}
 				    	  	title={restaurant.name}
 				    	/>
@@ -80,9 +79,6 @@ const styles = StyleSheet.create({
 	},
 	restaurantList: {
 		height: height * .6
-	},
-	restaurantListElement: {
-		flex: .2
 	},
 	map : {
 		flex: 1

@@ -13,7 +13,9 @@ exports.handler = (e, context, callback) => {
 		var data = yelp.search({
 			term: decodeURI(e.keyword), 
 			longitude: parseInt(e.longitude), 
-			latitude: parseInt(e.latitude)
+			latitude: parseInt(e.latitude),
+			limit: 25,
+			radius: 40000
 		})
 		resolve(data)
 	})

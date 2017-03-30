@@ -8,7 +8,9 @@ import {
 		AsyncStorage,
 		Picker,
 		TouchableOpacity,
-		TextInput
+		TextInput,
+		Dimensions,
+		Image
 } from 'react-native';
 import Expo, {
 	Location,
@@ -16,12 +18,14 @@ import Expo, {
 } from 'expo';
 import Modal from 'react-native-modalbox';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import parseDate from '../utils/parseDate';
 
 export default class LoginScreen extends React.Component {
 	constructor() {
 		super()
+		
 		this.state = {
 			isDateTimePickerVisible: false,
 			guestBirthday: "",
@@ -118,16 +122,31 @@ export default class LoginScreen extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
-				<Button title="Login with Facebook" onPress={this._handleFacebookLogin} />
-				<Text> OR </Text>
-				<Button title="Continue as Guest" onPress={()=>this.refs.modal1.open()} />
-				<Modal style={styles.container} ref="modal1" backdrop={true}  position={"top"}>
+			<View style={{flex: 1}}>
+				<View style={{alignItems: 'center', marginTop: 50}}>			
+					<Image style={{height: 250, width: 250}} source={require('../assets/icons/crystal-ball.png')} />
+					<Text style={{fontSize: 40}}> AstroloEats </Text> 
+				</View>
+				<View style={styles.buttonContainer}>
+					<TouchableOpacity style={[styles.button, {backgroundColor: "#3B5998"}]} onPress={this._handleFacebookLogin} >
+						<Icon style={{marginLeft: 15}} size={30} name="facebook-square" color="#ffffff"/>
+						<View style={styles.buttonText}>
+							<Text style={{color: "#ffffff"}}> Login with Facebook </Text>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity style={[styles.button, {marginBottom: 100, backgroundColor: "#a9a9a9"}]}  onPress={()=>this.refs.modal1.open()} >
+						<Icon style={{marginLeft: 15}} size={30} name="user" color="#ffffff"/>
+						<View style={styles.buttonText}>
+							<Text style={{color: "#ffffff"}}> Continue as Guest </Text>
+						</View>
+					</TouchableOpacity>
+				</View>
+
+				<Modal style={styles.modal} ref="modal1" backdrop={true}  position={"top"}>
 					<Text>Modal on top</Text>
 					<TouchableOpacity onPress={this._showDateTimePicker}>
 						<Text>Birthday</Text>
 					</TouchableOpacity>
-					<Button title="Test" onPress={()=>console.log(this.state.guestBirthday + " " + typeof this.state.guestBirthday)} />
 					<DateTimePicker
 			          isVisible={this.state.isDateTimePickerVisible}
 			          onConfirm={this._handleDatePicked}
@@ -149,11 +168,33 @@ export default class LoginScreen extends React.Component {
 	}
 }
 
+var {height, width} = Dimensions.get('window')
+
 const styles = StyleSheet.create({
-  container: {
+  buttonContainer: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+  },
+  modal: {
+  	flex: 1,
+  	justifyContent: 'center',
+  	alignItems: 'center'
+  },
+  button: {
+  	flexDirection: 'row',
+  	alignItems: 'center',
+  	width: width * .8,
+  	marginTop: 5,
+  	borderRadius: 5
+  },
+  buttonText: {
+  	flex: 1,
+  	justifyContent: 'center', 
+  	alignItems: 'center'
+  },
+  banner: {
+  	justifyContent: 'flex-start'
   }
 });
