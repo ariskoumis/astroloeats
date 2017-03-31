@@ -26,6 +26,7 @@ export default class MapScreen extends React.Component {
 		}
 		this.handleRegionUpdate = this.handleRegionUpdate.bind(this)
 	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -47,7 +48,7 @@ export default class MapScreen extends React.Component {
 			    	/>
 			        {this.props.restaurants.map(restaurant => (
 					    <Components.MapView.Marker
-					    	key={restaurant.coordinates.title}
+					    	key={restaurant.coordinates.longitude * restaurant.coordinates.latitude}
 					      	coordinate={restaurant.coordinates}
 				    	  	title={restaurant.name}
 				    	/>

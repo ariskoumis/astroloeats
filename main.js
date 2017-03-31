@@ -10,7 +10,7 @@ import {
 
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
-
+import LoadingScreen from './screens/LoadingScreen';
 class App extends React.Component {
   constructor() {
     super() 
@@ -50,10 +50,8 @@ class App extends React.Component {
     if (!this.state.loggedIn) {
       return <LoginScreen onLogIn={this.onLogIn} handleRegionUpdate={this._handleRegionUpdate}/>
     }
-
-    return (
-      <HomeScreen region={this.state.region} handleLogout={this.handleLogout}/>
-    )
+    
+    return <HomeScreen region={this.state.region} handleLogout={this.handleLogout}/>
   }
 
 }

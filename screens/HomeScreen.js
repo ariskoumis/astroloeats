@@ -4,7 +4,8 @@ import {
 	StyleSheet,
 	Text,
 	Image,
-	AsyncStorage
+	AsyncStorage,
+	ActivityIndicator
 } from 'react-native';
 import {
 	Components,
@@ -13,6 +14,7 @@ import {
 import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import LoadingScreen from './LoadingScreen';
 import HoroscopeScreen from './HoroscopeScreen';
 import AboutScreen from './AboutScreen';
 import MapScreen from './MapScreen';
@@ -22,6 +24,7 @@ import StatusBarBackground from '../components/StatusBarBackground';
 import getAstrologicalSign from '../utils/getAstrologicalSign';
 import decideFoods from '../utils/decideFoods';
 import shuffleArray from '../utils/shuffleArray';
+
 
 export default class HoroscopeTabView extends React.Component {
 	constructor(props) {
@@ -79,18 +82,18 @@ export default class HoroscopeTabView extends React.Component {
 		//Choose Foods, Call Yelp API
 		var foods = decideFoods(tone)
     	var [food1, food2, food3] = foods
-    	console.log(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}`)
-		var restaurantReq1 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}`)
+    	
+    	var restaurantReq1 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}`)
 		var restaurantReq2 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food2)}`)
 		var restaurantReq3 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food3)}`)
 
+		
 		restaurantReq1 = JSON.parse(JSON.parse(restaurantReq1._bodyInit)).businesses
 		restaurantReq2 = JSON.parse(JSON.parse(restaurantReq2._bodyInit)).businesses
 		restaurantReq3 = JSON.parse(JSON.parse(restaurantReq3._bodyInit)).businesses
 		var restaurants = [...restaurantReq1, ...restaurantReq2, ...restaurantReq3]
 
 		restaurants = shuffleArray(restaurants)
-		
     	this.setState({
 	        horoscope: horoscope,
 	        tone: JSON.stringify(tone),
@@ -161,7 +164,9 @@ export default class HoroscopeTabView extends React.Component {
 
 	render() {
 		if (!this.state.appIsReady) {
-      		return <Components.AppLoading/>
+      		return (
+      			<LoadingScreen />
+  			)
     	}
 
 		return (
@@ -181,7 +186,7 @@ export default class HoroscopeTabView extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   loading: {
     flex: 1,

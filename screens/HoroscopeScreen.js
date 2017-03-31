@@ -64,6 +64,7 @@ export default class HoroscopeScreen extends React.Component {
 
 				<View style={styles.container}>
 					<Accordion
+						initallyActiveSection={0}
 						sections={CONTENT}
 						renderHeader={this._renderHeader}
 						renderContent={this._renderContent}
