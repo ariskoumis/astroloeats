@@ -48,7 +48,7 @@ export default class BarChartColumnBasic extends React.Component {
             margin: {
                 top: 20,
                 left: 25,
-                bottom: 50,
+                bottom: 35,
                 right: 20
             },
             color: '#2980B9',
@@ -74,7 +74,7 @@ export default class BarChartColumnBasic extends React.Component {
             },
             axisY: {
                 showAxis: true,
-                showLines: true,
+                showLines: false,
                 showLabels: true,
                 showTicks: true,
                 zeroAxis: false,
@@ -89,7 +89,7 @@ export default class BarChartColumnBasic extends React.Component {
         }
 
         return (
-          <View>
+          <View style={{alignItems:'center'}}>
             <Bar style={{flex:1}} data={this.state.data} options={options} accessorKey='v'/>
           </View>
         )

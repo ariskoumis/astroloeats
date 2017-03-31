@@ -153,7 +153,7 @@ export default class LoginScreen extends React.Component {
 					</View>
 
 					<TouchableOpacity style={styles.guestLoginButton} activeOpacity={1}  onPress={this._handleGuestLogin}>
-						<Text style={{fontSize: 30}} style={{color: '#ffffff'}}>Login    </Text>
+						<Text style={{fontSize: 30, paddingRight: 5}} style={{color: '#ffffff'}}>Login</Text>
 						<Icon size={30} name="arrow-right" color="#ffffff" />
 					</TouchableOpacity>
 				</Modal>

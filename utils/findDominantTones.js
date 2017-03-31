@@ -7,5 +7,10 @@ export default findDominantTones = (horoscopeTone) => {
 			dominantTones.push(category)
 		}
 	})
+
+	if (dominantTones.length == 0) {
+		dominantTones.push(emotionTone[0])
+	}
+
 	return dominantTones
 }

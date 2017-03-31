@@ -26,11 +26,12 @@ export default decideFoods = (toneInput) => {
 		foodArray = sadFoods
 	}
 
-	
+	//The First Index in foodRecs is an array of the dominant tones.
 	var foodRecs = []
+	foodRecs.push(toneNames)
 
 
-	while (foodRecs.length <3) {
+	while (foodRecs.length < 4) {
 		var randomIndex = Math.floor(Math.random() * foodArray.length)
 		if (foodRecs.indexOf(foodArray[randomIndex]) == -1) {
 			foodRecs.push(foodArray[randomIndex])

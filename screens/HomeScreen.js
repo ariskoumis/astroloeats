@@ -81,7 +81,7 @@ export default class HoroscopeTabView extends React.Component {
 
 		//Choose Foods, Call Yelp API
 		var foods = decideFoods(tone)
-    	var [food1, food2, food3] = foods
+    	var [foodDescription, food1, food2, food3] = foods
     	
     	var restaurantReq1 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}`)
 		var restaurantReq2 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food2)}`)
@@ -107,7 +107,7 @@ export default class HoroscopeTabView extends React.Component {
 	_renderScene({route}) {
 		switch(route.key) {
 		case '1':
-			return <HoroscopeScreen horoscope={this.state.horoscope} sign={this.state.sign} tone={this.state.tone} foods={this.state.foods}/>
+			return <HoroscopeScreen switchToMap={()=> this.setState({index: 1})} horoscope={this.state.horoscope} sign={this.state.sign} tone={this.state.tone} foods={this.state.foods}/>
 			break
 		case '2':
 			return <MapScreen region={this.state.region} restaurants={this.state.restaurants}/>
