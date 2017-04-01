@@ -2,6 +2,7 @@ import React from 'react';
 import {
 	View,
 	Text,
+	Image,
 	StyleSheet
 } from 'react-native';
 
@@ -41,9 +42,9 @@ export default class LoadingScreen extends React.Component {
 	}
 
 	render() {
-		// You do not need to decrease the value here
 		return (
 			<View style={styles.container}>
+				<Image style={{height: 250, width: 250}} source={require('../assets/icons/loading.gif')} />
 				<Text>Predicting Your Future{this.state.ellipsis}</Text> 
 			</View>
 		);

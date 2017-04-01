@@ -107,7 +107,7 @@ export default class LoginScreen extends React.Component {
 		return (
 			<View style={{flex: 1}}>
 				<View style={{alignItems: 'center', marginTop: 50}}>			
-					<Image style={{height: 250, width: 250}} source={require('../assets/icons/crystal-ball.png')} />
+					<Image style={{height: 250, width: 250}} source={require('../assets/icons/app.png')} />
 					<Text style={{...Font.style('vonique'), fontSize: 40}}> AstroloEats </Text> 
 				</View>
 				<View style={styles.buttonContainer}>
@@ -152,8 +152,8 @@ export default class LoginScreen extends React.Component {
 					</View>
 
 					<TouchableOpacity style={styles.guestLoginButton} activeOpacity={1}  onPress={this._handleGuestLogin}>
-						<Text style={{fontSize: 30, paddingRight: 5}} style={{color: '#ffffff'}}>Login</Text>
-						<Icon size={30} name="arrow-right" color="#ffffff" />
+						<Text style={{fontSize: 30}} style={{color: '#ffffff'}}>Login</Text>
+						<Icon style={{marginLeft: 5}}size={30} name="arrow-right" color="#ffffff" />
 					</TouchableOpacity>
 				</Modal>
 			</View>
@@ -174,7 +174,8 @@ const styles = StyleSheet.create({
   },
   modal: {
   	justifyContent: 'center',
-  	alignItems: 'center'
+  	alignItems: 'center',
+  	backgroundColor: "#e6e8e6"
   },
   button: {
   	flexDirection: 'row',
@@ -195,11 +196,14 @@ const styles = StyleSheet.create({
   	height: 40,
   	borderColor: 'gray',
   	borderWidth: 1,
+  	borderRadius: 5,
   	paddingLeft: 5,
-  	marginRight: 5
+  	marginRight: 5,
+  	color: "#a9a9a9"
   },
   inputHeader: {
   	fontSize: 30,
+  	...Font.style('vonique')
   },
   guestLoginButton: {
   	flexDirection:'row', 
@@ -208,7 +212,7 @@ const styles = StyleSheet.create({
   	justifyContent:'center', 
   	marginRight: 5,
   	marginBottom: 30,
-  	backgroundColor: "#00ff00",
+  	backgroundColor: "#BCD8C1",
   	borderRadius: 5,
   	padding: 5
   },
