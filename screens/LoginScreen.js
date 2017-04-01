@@ -14,7 +14,8 @@ import {
 } from 'react-native';
 import Expo, {
 	Location,
-	Permissions
+	Permissions,
+	Font
 } from 'expo';
 import Modal from 'react-native-modalbox';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -107,7 +108,7 @@ export default class LoginScreen extends React.Component {
 			<View style={{flex: 1}}>
 				<View style={{alignItems: 'center', marginTop: 50}}>			
 					<Image style={{height: 250, width: 250}} source={require('../assets/icons/crystal-ball.png')} />
-					<Text style={{fontSize: 40}}> AstroloEats </Text> 
+					<Text style={{...Font.style('vonique'), fontSize: 40}}> AstroloEats </Text> 
 				</View>
 				<View style={styles.buttonContainer}>
 					<TouchableOpacity style={[styles.button, {backgroundColor: "#3B5998"}]} onPress={this._handleFacebookLogin} >

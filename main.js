@@ -1,5 +1,8 @@
-import Expo from 'expo';
 import React from 'react';
+import Expo, {
+  Components, 
+  Font
+} from 'expo';
 import {
   StyleSheet,
   Text,
@@ -16,6 +19,7 @@ class App extends React.Component {
     super() 
     this.state = {
       loggedIn: false,
+      appIsReady: false,
       region: {
         longitude: 0,
         latitude: 0
@@ -25,6 +29,18 @@ class App extends React.Component {
     this.onLogIn = this.onLogIn.bind(this)
     this._handleRegionUpdate = this._handleRegionUpdate.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+      'roboto-italic': require('./assets/fonts/Roboto-Regular.ttf'),
+      'roboto-bold': require('./assets/fonts/Roboto-Regular.ttf'),
+      'vonique': require('./assets/fonts/Vonique-64.ttf')
+    })
+    this.setState({
+      appIsReady: true
+    })
   }
 
   _handleRegionUpdate(newRegion) {
@@ -47,6 +63,10 @@ class App extends React.Component {
   }
 
   render() {
+    if (!this.state.appIsReady) {
+      return <Components.AppLoading />
+    }
+
     if (!this.state.loggedIn) {
       return <LoginScreen onLogIn={this.onLogIn} handleRegionUpdate={this._handleRegionUpdate}/>
     }
