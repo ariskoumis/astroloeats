@@ -66,8 +66,6 @@ export default class LoginScreen extends React.Component {
       		const response = await fetch( `https://graph.facebook.com/me?access_token=${token}&fields=id,name,birthday`)
       		const userInfo = await response.json()
       		await AsyncStorage.multiSet([['name', userInfo.name], ['birthday', userInfo.birthday]])
-      		console.log(userInfo.birthday)
-      		console.log(typeof userInfo.birthday)
       		Alert.alert('Logged in!', `Hi ${userInfo.name}!`)
       		this._requestLocation()
 

@@ -39,8 +39,6 @@ export default class HoroscopeScreen extends React.Component {
 	}
 
 	_renderContent(section, i, isActive) {
-		console.log(section, i, isActive)
-		console.log(typeof section, typeof i, typeof isActive)
 		switch(section.title) {
 			case "Today's Horoscope":
 				return (

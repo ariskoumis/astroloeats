@@ -13,12 +13,12 @@ import {
 
 import RestaurantListElement from '../components/RestaurantListElement';
 
-var height = Dimensions.get('window').width
+var height = Dimensions.get('window').height
+var id = 1
 
 export default class MapScreen extends React.Component {
 	constructor(props) {
 		super(props)
-
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 		this.state = {
 			region: props.region,
@@ -48,7 +48,7 @@ export default class MapScreen extends React.Component {
 			    	/>
 			        {this.props.restaurants.map(restaurant => (
 					    <Components.MapView.Marker
-					    	key={restaurant.coordinates.longitude * restaurant.coordinates.latitude}
+					    	key={`${id++}`}
 					      	coordinate={restaurant.coordinates}
 				    	  	title={restaurant.name}
 				    	/>

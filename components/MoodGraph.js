@@ -48,8 +48,8 @@ export default class BarChartColumnBasic extends React.Component {
             margin: {
                 top: 20,
                 left: 25,
-                bottom: 35,
-                right: 20
+                bottom: 40,
+                right: 25
             },
             color: '#2980B9',
             gutter: 20,

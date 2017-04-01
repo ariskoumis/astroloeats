@@ -3,7 +3,6 @@ export default findDominantTones = (horoscopeTone) => {
 	var dominantTones = []
 	emotionTone.forEach((category) => {
 		if (category.score >= 0.5) {
-			console.log(category)
 			dominantTones.push(category)
 		}
 	})
