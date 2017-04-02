@@ -16,8 +16,8 @@ export default decideFoods = (toneInput) => {
 		}
 	})
 
-	var happyFoods = ["Salad", "Ice Cream", "Healthy Foods", "Vegetarian Food", "Boba", "Sandwich", "Coffee", "Tapas", "Poke", "Superfood", "Pizza", "Sushi", "Fish", "Doughnuts", "Wings"]
-	var sadFoods = ["Soul Food", "Mexican Food", "Burgers", "Hearty Food", "Mongolian BBQ", "Bar", "Pho", "Soup", "Ice Cream", "Greek Food", "Pizza", "Deep Fried", "Fondue", "Crepe", "Doughnuts", "Italian", "Chinese Food", "Deep Dish"] 
+	var happyFoods = ["Salad", "Ice Cream", "Healthy", "Vegetarian", "Boba", "Sandwich", "Coffee", "Tapas", "Poke", "Superfood", "Pizza", "Sushi", "Fish", "Doughnuts", "Wings"]
+	var sadFoods = ["Soul", "Mexican", "Burgers", "Hearty", "Mongolian BBQ", "Bar", "Pho", "Soup", "Ice Cream", "Greek", "Pizza", "Deep Fried", "Fondue", "Crepe", "Doughnuts", "Italian", "Chinese", "Deep Dish"] 
 	
 	var foodArray = []
 	if (toneScore >= 0) {

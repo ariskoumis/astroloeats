@@ -26,7 +26,8 @@ export default class MapScreen extends React.Component {
 			region: props.region,
 			restaurantDataSource: ds.cloneWithRows(props.restaurants),
 			ds: ds,
-			pickerValue: "distanceUp"
+			pickerValue: "distanceUp",
+			activeRow: null
 		}
 		this.handleRegionUpdate = this.handleRegionUpdate.bind(this)
 
@@ -36,6 +37,12 @@ export default class MapScreen extends React.Component {
 	handleRegionUpdate(newRegion) {
 		this.setState({
 			region: newRegion
+		})
+	}
+
+	handleRowFocus(index) {
+		this.setState({
+			activeRow: index
 		})
 	}
 
