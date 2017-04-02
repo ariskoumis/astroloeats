@@ -11,6 +11,7 @@ import {
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/Foundation';
 import Phone from 'react-native-communications';
+import StarRating from 'react-native-star-rating';
 
 import toMiles from '../utils/toMiles';
 
@@ -20,6 +21,7 @@ export default class RestaurantListElement extends React.Component {
 		this.state = {
 			collapsed: true
 		}
+		console.log(props)
 		this.handleFocus = this.handleFocus.bind(this)
 		this.handleRestaurantCall = this.handleRestaurantCall.bind(this)
 		this.handleWebsite = this.handleWebsite.bind(this)
@@ -65,7 +67,16 @@ export default class RestaurantListElement extends React.Component {
 				<TouchableOpacity onPress={this.handleFocus} style={styles.container}>
 					<Image style={styles.image} source={{uri: this.props.restaurant.image_url}} />
 					<View style={styles.info}>
-						<Text style={{fontWeight: "bold", fontSize: 14}}>{this.props.restaurant.name}</Text> 
+						<Text style={{fontWeight: "bold", fontSize: 14}}>{this.props.restaurant.name}</Text>
+						<View style={{flexDirection: 'row', flex: .5}}>
+						<StarRating
+							disabled={true}
+							maxStars={5}
+							rating={this.props.restaurant.rating}
+							starSize={10}
+							starColor={"#FFD700"}
+						/> 
+						</View>
 						<Text style={{fontSize: 12}}>{this.props.restaurant.categories[0].title} - {this.props.restaurant.price} </Text>
 						<Text style={{fontSize: 12}}>{toMiles(this.props.restaurant.distance)} miles away</Text>
 					</View>
@@ -95,11 +106,13 @@ export default class RestaurantListElement extends React.Component {
 
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
 		flexDirection: 'row',
 		padding: 10,
 		borderStyle: 'solid'
 	},
 	info: {
+		flex: 1,
 		flexDirection: 'column',
 		paddingLeft: 5
 	},
