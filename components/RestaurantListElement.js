@@ -21,7 +21,6 @@ export default class RestaurantListElement extends React.Component {
 		this.state = {
 			collapsed: true
 		}
-		console.log(props)
 		this.handleFocus = this.handleFocus.bind(this)
 		this.handleRestaurantCall = this.handleRestaurantCall.bind(this)
 		this.handleWebsite = this.handleWebsite.bind(this)
@@ -75,7 +74,7 @@ export default class RestaurantListElement extends React.Component {
 							rating={this.props.restaurant.rating}
 							starSize={10}
 							starColor={"#FFD700"}
-						/> 
+						/>
 						</View>
 						<Text style={{fontSize: 12}}>{this.props.restaurant.categories[0].title} - {this.props.restaurant.price} </Text>
 						<Text style={{fontSize: 12}}>{toMiles(this.props.restaurant.distance)} miles away</Text>
