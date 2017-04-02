@@ -12,6 +12,8 @@ import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/Foundation';
 import Phone from 'react-native-communications';
 
+import toMiles from '../utils/toMiles';
+
 export default class RestaurantListElement extends React.Component {
 	constructor(props) {
 		super(props)
@@ -64,7 +66,8 @@ export default class RestaurantListElement extends React.Component {
 					<Image style={styles.image} source={{uri: this.props.restaurant.image_url}} />
 					<View style={styles.info}>
 						<Text style={{fontWeight: "bold", fontSize: 14}}>{this.props.restaurant.name}</Text> 
-						<Text style={{fontSize: 12}}>{this.props.restaurant.categories[0].title} - {this.props.restaurant.price} </Text> 
+						<Text style={{fontSize: 12}}>{this.props.restaurant.categories[0].title} - {this.props.restaurant.price} </Text>
+						<Text style={{fontSize: 12}}>{toMiles(this.props.restaurant.distance)} miles away</Text>
 					</View>
 				</TouchableOpacity>
 		        <Collapsible collapsed={this.state.collapsed} align="center">
