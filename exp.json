@@ -1,6 +1,6 @@
 {
   "name": "astroloeats",
-  "description": "An empty new project",
+  "description": "Horoscope-based Restaurant Reccomendations",
   "slug": "astroloeats",
   "privacy": "public",
   "sdkVersion": "14.0.0",

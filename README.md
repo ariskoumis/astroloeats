@@ -4,7 +4,9 @@ Get food reccomendations based on your daily horoscope. Using [IBM Watson's Tone
 
 
 ## Usage
-AstroloEats is currently hosted on Expo
+AstroloEats is currently hosted on Expo! 
+
+[Click here](https://expo.io/@ariskoumis/astroloeats) to access the app.
 
 
 ## Built with Expo
