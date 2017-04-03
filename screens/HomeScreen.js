@@ -78,12 +78,12 @@ export default class HoroscopeTabView extends React.Component {
 		//Choose Foods, Call Yelp API
 		var foods = decideFoods(tone)
     	var [foodDescription, food1, food2, food3] = foods
-    	
+		
+		//An individual API Call for each food reccomendation    	
     	var restaurantReq1 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food1)}`)
 		var restaurantReq2 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food2)}`)
 		var restaurantReq3 = await fetch(`https://5i9mycougi.execute-api.us-west-1.amazonaws.com/prod/?longitude=${region.longitude}&latitude=${region.latitude}&keyword=${encodeURI(food3)}`)
 
-		
 		restaurantReq1 = JSON.parse(JSON.parse(restaurantReq1._bodyInit)).businesses
 		restaurantReq2 = JSON.parse(JSON.parse(restaurantReq2._bodyInit)).businesses
 		restaurantReq3 = JSON.parse(JSON.parse(restaurantReq3._bodyInit)).businesses

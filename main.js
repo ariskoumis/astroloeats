@@ -32,7 +32,7 @@ class App extends React.Component {
     }
 
     this.onLogIn = this.onLogIn.bind(this)
-    this._handleRegionUpdate = this._handleRegionUpdate.bind(this)
+    this.handleRegionUpdate = this.handleRegionUpdate.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
   }
 
@@ -51,7 +51,7 @@ class App extends React.Component {
     })
   }
 
-  _handleRegionUpdate(newRegion) {
+  handleRegionUpdate(newRegion) {
     this.setState({
       region: newRegion
     })
@@ -71,12 +71,13 @@ class App extends React.Component {
   }
 
   render() {
+    console.disableYellowBox = true;
     if (!this.state.appIsReady) {
       return <Components.AppLoading />
     }
 
     if (!this.state.loggedIn) {
-      return <LoginScreen onLogIn={this.onLogIn} handleRegionUpdate={this._handleRegionUpdate}/>
+      return <LoginScreen onLogIn={this.onLogIn} handleRegionUpdate={this.handleRegionUpdate}/>
     }
     
     return <HomeScreen region={this.state.region} handleLogout={this.handleLogout}/>
