@@ -3,3 +3,4 @@ node_modules/**/*
 npm-debug.*
 lambda/analyzeText/node_modules/**/*
 lambda/yelpSearch/node_modules/**/*
+.DS_Store
