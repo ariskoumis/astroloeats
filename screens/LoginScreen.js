@@ -48,7 +48,7 @@ export default class LoginScreen extends React.Component {
 		this._handleGuestLogin = this._handleGuestLogin.bind(this)
 	}
 
-	async componentWillMount() {
+	async componentDidMount() {
 		if (await this._loggedIn()) {
 			this.props.onLogIn()
 		}
@@ -168,14 +168,14 @@ export default class LoginScreen extends React.Component {
 							</TouchableOpacity>
 
 							<View style={{flex: 1, justifyContent: 'center', alignSelf: 'stretch', marginLeft: 10}}>
-								<Text style={styles.inputHeader}>Name</Text>
+								<Text style={[styles.inputHeader, {...Font.style('vonique')}]}>Name</Text>
 						        <TextInput
 						        	style={styles.textInput}
 						        	selectTextOnFocus={true}
 						        	onChangeText={(text) => this.setState({guestName: text})}
 						        	value={this.state.guestName}
 					        	/>
-								<Text style={styles.inputHeader}>Birthday</Text>
+								<Text style={[styles.inputHeader, {...Font.style('vonique')}]}>Birthday</Text>
 								<TextInput
 						        	style={styles.textInput}
 						        	onFocus={() => {this.setState ({isDateTimePickerVisible: true})}}

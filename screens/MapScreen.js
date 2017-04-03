@@ -13,11 +13,23 @@ import {
 	Components,
 } from 'expo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ModalPicker from '../components/react-native-modal-picker';
+
 
 import RestaurantListElement from '../components/RestaurantListElement';
 
 var height = Dimensions.get('window').height
 var id = 1
+
+let index = 0;
+const data = [
+{ key: 'distanceUp', label: '↑ Distance' },
+{ key: 'distanceDown', label: '↓ Distance' },
+{ key: 'priceUp', label: '↑ Price' },
+{ key: 'priceDown', label: '↓ Price' },
+{ key: 'ratingUp', label: '↑ Rating' },
+{ key: 'ratingDown', label: '↓ Rating' }
+];
 
 export default class MapScreen extends React.Component {
 	constructor(props) {
@@ -28,9 +40,10 @@ export default class MapScreen extends React.Component {
 			restaurantDataSource: ds.cloneWithRows(props.restaurants),
 			ds: ds,
 			pickerValue: "distanceUp",
-			activeRow: null
+
 		}
 		this.handleRegionUpdate = this.handleRegionUpdate.bind(this)
+		this.sortList = this.sortList.bind(this)
 
 		this.sortByDistance('up')
 	}
@@ -50,10 +63,11 @@ export default class MapScreen extends React.Component {
 	sortList(option) {
 		this.refs.restaurantList.scrollTo({y: 0})
 		this.setState({
-			pickerValue: option
+			pickerValue: option.key
 		})
 
-		switch(option) {
+		console.log(option.key, typeof option.key)
+		switch(option.key) {
 			case 'distanceUp':
 				this.sortByDistance('up')
 				break
@@ -163,7 +177,12 @@ export default class MapScreen extends React.Component {
 			        region={this.state.region}
 		        >
 		        <TouchableOpacity style={{position:'absolute',bottom:5,right:5,backgroundColor:'rgba(0,0,0,.2)'}}> 
-					<Icon onPress={this.openSortingOptions} size={30} name="sort" />
+					<ModalPicker
+	      			data = {data}
+	      			onChange = {this.sortList}
+      				>
+      				<Icon onPress={this.openSortingOptions} size={30} name="sort" />
+      				</ModalPicker>
 				</TouchableOpacity> 
 			        <Components.MapView.Marker
 				        image={require('../assets/icons/green-pin.png')}
@@ -178,20 +197,8 @@ export default class MapScreen extends React.Component {
 				    	  	title={restaurant.name}
 				    	/>
 				  	))}
+
 		      	</Components.MapView>
-		      	<View style={styles.mask}>
-		      		<Picker
-		      			style={styles.picker}
-		      			selectedValue={this.state.pickerValue}
-		      			onValueChange={this.sortList.bind(this)} >
-		      			<Picker.Item label="↑ Distance" value="distanceUp"/>
-		      			<Picker.Item label="↓ Distance" value="distanceDown"/>
-		      			<Picker.Item label="↑ Rating" value="ratingUp"/>
-		      			<Picker.Item label="↓ Rating" value="ratingDown"/>
-		      			<Picker.Item label="↑ Price" value="priceUp"/>
-		      			<Picker.Item label="↓ Price" value="priceDown"/>
-	      			</Picker>
-      			</View>
 		      	<ListView
 		      		ref = {"restaurantList"}
 		      		style = {{flex: 1}}
