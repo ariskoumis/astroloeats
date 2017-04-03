@@ -21,11 +21,11 @@ export default class RestaurantListElement extends React.Component {
 		this.state = {
 			collapsed: true
 		}
+
 		this.handleFocus = this.handleFocus.bind(this)
 		this.handleRestaurantCall = this.handleRestaurantCall.bind(this)
 		this.handleWebsite = this.handleWebsite.bind(this)
 		this.handleDirections = this.handleDirections.bind(this)
-
 	}
 
 	handleFocus() {
@@ -42,7 +42,6 @@ export default class RestaurantListElement extends React.Component {
 	handleRestaurantCall() {
 		var number = this.props.restaurant.phone
 		Phone.phonecall(number, true)
-	
 	}
 
 	handleDirections() {

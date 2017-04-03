@@ -1,22 +1,24 @@
 import React from 'react';
 import {
-		StyleSheet,
-		View,
-		Text,
-		Button,
-		Alert,
-		AsyncStorage,
-		Picker,
-		TouchableOpacity,
-		TextInput,
-		Dimensions,
-		Image,
-		Animated
+	StyleSheet,
+	View,
+	Text,
+	Button,
+	Alert,
+	AsyncStorage,
+	Picker,
+	TouchableOpacity,
+	TextInput,
+	Dimensions,
+	Image,
+	Animated
 } from 'react-native';
-import Expo, {
+import {
 	Location,
 	Permissions,
-	Font
+	Font,
+	Components,
+	Facebook
 } from 'expo';
 import Modal from 'react-native-modalbox';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -27,6 +29,7 @@ import LoadingScreen from './LoadingScreen';
 import parseDate from '../utils/parseDate';
 
 const videoSource = require('../assets/videos/loadingBG.mp4');
+var {height, width} = Dimensions.get('window')
 
 export default class LoginScreen extends React.Component {
 	constructor() {
@@ -41,15 +44,15 @@ export default class LoginScreen extends React.Component {
 
 		}
 
-		this._handleGuestLogin = this._handleGuestLogin.bind(this)
-		this._requestLocation = this._requestLocation.bind(this)
-		this._handleFacebookLogin = this._handleFacebookLogin.bind(this)
-		this._handleDatePicked = this._handleDatePicked.bind(this)
-		this._handleGuestLogin = this._handleGuestLogin.bind(this)
+		this.handleGuestLogin = this.handleGuestLogin.bind(this)
+		this.requestLocation = this.requestLocation.bind(this)
+		this.handleFacebookLogin = this.handleFacebookLogin.bind(this)
+		this.handleDatePicked = this.handleDatePicked.bind(this)
+		this.fadeInVideo = this.fadeInVideo.bind(this)
 	}
 
 	async componentDidMount() {
-		if (await this._loggedIn()) {
+		if (await this.loggedIn()) {
 			this.props.onLogIn()
 		}
 
@@ -58,7 +61,7 @@ export default class LoginScreen extends React.Component {
 
 	
 
-	async _loggedIn() {
+	async loggedIn() {
 		var value = await AsyncStorage.getItem('birthday')
 		if (!value) {
 			return false
@@ -67,8 +70,8 @@ export default class LoginScreen extends React.Component {
 		return true
 	}
 
-	async _handleFacebookLogin() {
-		const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync('101465287056746', {
+	async handleFacebookLogin() {
+		const {type, token} = await Facebook.logInWithReadPermissionsAsync('101465287056746', {
 		permissions: ['public_profile', 'user_birthday'],
 		behavior:'web'
 		})
@@ -78,12 +81,12 @@ export default class LoginScreen extends React.Component {
       		const userInfo = await response.json()
       		await AsyncStorage.multiSet([['name', userInfo.name], ['birthday', userInfo.birthday]])
       		Alert.alert('Logged in!', `Hi ${userInfo.name}!`)
-      		this._requestLocation()
+      		this.requestLocation()
 
 		}
 	}
 
-	async _requestLocation() {
+	async requestLocation() {
 		var { status } = await Permissions.askAsync(Permissions.LOCATION)
 		if (status === 'granted') {
 			var currentLocation = await Location.getCurrentPositionAsync({enableHighAccuracy: true})
@@ -96,19 +99,19 @@ export default class LoginScreen extends React.Component {
 			this.props.onLogIn()
 		} else {
 			await Alert.alert("Error", "Please enable location services.")
-			this._requestLocation()
+			this.requestLocation()
 		}
 	}
 
 
-	_handleDatePicked(date) {
+	handleDatePicked(date) {
 		this.setState({
 			isDateTimePickerVisible: false,
 			guestBirthday: parseDate(date)
 		})
 	}
 
-	_fadeInVideo = () => {
+	fadeInVideo() {
 		setTimeout(() => {
 			Animated.spring(this.state.backgroundOpacity, {toValue: 1}).start()
 		}, 500)
@@ -116,9 +119,9 @@ export default class LoginScreen extends React.Component {
 		this.refs.videoBackground.seek(100000)
 	}
 
-	async _handleGuestLogin() {
+	async handleGuestLogin() {
 		await AsyncStorage.multiSet([['name', this.state.guestName], ['birthday', this.state.guestBirthday]])
-		this._requestLocation()
+		this.requestLocation()
 	}
 
 	render() {
@@ -130,14 +133,14 @@ export default class LoginScreen extends React.Component {
 			<View style={styles.container}>
 				<View style={styles.background}>
 					<Animated.View style={[styles.backgroundViewWrapper, {opacity: this.state.backgroundOpacity}]}>
-			            <Expo.Components.Video
-			            	ref={"videoBackground"}
-			              source={videoSource}
-			              style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}
-			              resizeMode="cover"
-			              repeat={true}
-			              mute={true}
-			              onLoad={() => this._fadeInVideo()}
+			            <Components.Video
+		            		ref={"videoBackground"}
+			              	source={videoSource}
+			              	style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}
+			              	resizeMode="cover"
+			              	repeat={true}
+			              	mute={true}
+			              	onLoad={() => this.fadeInVideo()}
 			            />
 		          	</Animated.View>
 				</View>
@@ -148,7 +151,7 @@ export default class LoginScreen extends React.Component {
 							<Text style={{...Font.style('vonique'), fontSize: 40, color: "#ffffff"}}> AstroloEats </Text> 
 						</View>
 						<View style={styles.buttonContainer}>
-							<TouchableOpacity style={[styles.button, {backgroundColor: "#3B5998"}]} onPress={this._handleFacebookLogin} >
+							<TouchableOpacity style={[styles.button, {backgroundColor: "#3B5998"}]} onPress={this.handleFacebookLogin} >
 								<Icon style={{marginLeft: 15}} size={30} name="facebook-square" color="#ffffff"/>
 								<View style={styles.buttonText}>
 									<Text style={{color: "#ffffff"}}> Login with Facebook </Text>
@@ -183,12 +186,12 @@ export default class LoginScreen extends React.Component {
 					        	/>
 					        	<DateTimePicker
 						          isVisible={this.state.isDateTimePickerVisible}
-						          onConfirm={this._handleDatePicked}
+						          onConfirm={this.handleDatePicked}
 						          onCancel={() => this.setState({isDateTimePickerVisible: false})}
 						        />
 							</View>
 
-							<TouchableOpacity style={styles.guestLoginButton} activeOpacity={1}  onPress={this._handleGuestLogin}>
+							<TouchableOpacity style={styles.guestLoginButton} activeOpacity={1}  onPress={this.handleGuestLogin}>
 								<Text style={{fontSize: 30}} style={{color: '#ffffff'}}>Login</Text>
 								<Icon style={{marginLeft: 5}}size={30} name="arrow-right" color="#ffffff" />
 							</TouchableOpacity>
@@ -201,8 +204,6 @@ export default class LoginScreen extends React.Component {
 	}
 }
 
-var {height, width} = Dimensions.get('window')
-
 const styles = StyleSheet.create({
 	container:{
 		flex: 1,
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
 	},
 	background: {
 		...StyleSheet.absoluteFillObject,
-		backgroundColor: '#000',
+	backgroundColor: '#000',
 	},
 	backgroundViewWrapper: {
 		...StyleSheet.absoluteFillObject,
@@ -221,61 +222,58 @@ const styles = StyleSheet.create({
 		...StyleSheet.absoluteFillObject,
 		backgroundColor: 'rgba(0,0,0,0.4)',
 	},
-  buttonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  modal: {
-  	justifyContent: 'center',
-  	alignItems: 'center',
-  	backgroundColor: "#E7ECEF"
-  },
-  button: {
-  	flexDirection: 'row',
-  	alignItems: 'center',
-  	width: width * .8,
-  	marginTop: 5,
-  	borderRadius: 5
-  },
-  buttonText: {
-  	flex: 1,
-  	justifyContent: 'center', 
-  	alignItems: 'center'
-  },
-  banner: {
-  	justifyContent: 'flex-start'
-  },
-  textInput: {
-  	height: 40,
-  	borderColor: 'gray',
-  	borderWidth: 1,
-  	borderRadius: 5,
-  	paddingLeft: 5,
-  	marginRight: 5,
-  	color: "#a9a9a9"
-  },
-  inputHeader: {
-  	fontSize: 30,
-  	...Font.style('vonique')
-  },
-  guestLoginButton: {
-  	flexDirection:'row', 
-  	alignSelf: 'stretch',
-  	alignItems:'center', 
-  	justifyContent:'center',
-  	marginLeft: 5,
-  	marginRight: 5,
-  	marginBottom: 30,
-  	backgroundColor: "#0F7173",
-  	borderRadius: 5,
-  	padding: 5
-  },
-  exitModal: {
-  	flexDirection:'row', 
-  	alignSelf: 'flex-end',
-  	justifyContent:'center', 
-  	marginRight: 10,
-  	marginTop: 30,
-  }
+	buttonContainer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'flex-end',
+	},
+	modal: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: "#E7ECEF"
+	},
+	button: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		width: width * .8,
+		marginTop: 5,
+		borderRadius: 5
+	},
+	buttonText: {
+		flex: 1,
+		justifyContent: 'center', 
+		alignItems: 'center'
+	},
+	textInput: {
+		height: 40,
+		borderColor: 'gray',
+		borderWidth: 1,
+		borderRadius: 5,
+		paddingLeft: 5,
+		marginRight: 5,
+		color: "#a9a9a9"
+	},
+	inputHeader: {
+		fontSize: 30,
+		...Font.style('vonique')
+	},
+	guestLoginButton: {
+		flexDirection:'row', 
+		alignSelf: 'stretch',
+		alignItems:'center', 
+		justifyContent:'center',
+		marginLeft: 5,
+		marginRight: 5,
+		marginBottom: 30,
+		backgroundColor: "#0F7173",
+		borderRadius: 5,
+		padding: 5
+	},
+	exitModal: {
+		flexDirection:'row', 
+		alignSelf: 'flex-end',
+		justifyContent:'center', 
+		marginRight: 10,
+		marginTop: 30,
+	}
 });

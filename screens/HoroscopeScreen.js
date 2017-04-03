@@ -13,17 +13,29 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import HoroscopeScreenHeader from '../components/HoroscopeScreenHeader';
 import MoodGraph from '../components/MoodGraph';
 
-import findDominantTones from '../utils/findDominantTones';
+var {height, width} = Dimensions.get('window')
 
+const CONTENT = [
+	{
+		title: "Today's Horoscope",
+	},
+	{
+		title: "Horoscope's Tone"
+	},
+	{
+		title: "Food Reccomendations"
+	}
+]
 
 export default class HoroscopeScreen extends React.Component {
 	constructor() {
 		super()
-		this._renderContent = this._renderContent.bind(this)
-		this._foodRecText = this._foodRecText.bind(this)
+
+		this.renderContent = this.renderContent.bind(this)
+		this.foodRecText = this.foodRecText.bind(this)
 	}
 
-	_renderHeader(section, i, isActive) {
+	renderHeader(section, i, isActive) {
 		return (
 			<Animatable.View duration={400} style={[styles.header, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
 				<Text style={styles.headerText}>{section.title}</Text>
@@ -31,25 +43,25 @@ export default class HoroscopeScreen extends React.Component {
 		);
 	}
 
-	_foodRecText() {
+	foodRecText() {
 		if (this.props.foods[0].length == 1) {
 			return `Your horoscope shows signs of ${this.props.foods[0][0]}.`
 		}
 		return `Your horoscope shows signs of ${this.props.foods[0][0]} and ${this.props.foods[0][1]}.`
 	}
 
-	_renderContent(section, i, isActive) {
+	renderContent(section, i, isActive) {
 		switch(section.title) {
 			case "Today's Horoscope":
 				return (
-					<Animatable.View duration={400}  style={[styles.content]} transition="backgroundColor">
+					<Animatable.View duration={400}  style={styles.content} transition="backgroundColor">
 						<Animatable.Text animation={isActive ? 'bounceIn' : undefined}>{this.props.horoscope}</Animatable.Text>
 					</Animatable.View>
 				)
 				break
 			case "Horoscope's Tone":
 				return (
-					<Animatable.View duration={400}  style={[styles.content]} transition="backgroundColor">
+					<Animatable.View duration={400}  style={styles.content} transition="backgroundColor">
 						<Animatable.Text style={styles.bodyHeader} animation={isActive ? 'bounceIn' : undefined}>
 							This graph displays the probability of each tone that is detected in your horoscope. 
 						</Animatable.Text>
@@ -63,7 +75,7 @@ export default class HoroscopeScreen extends React.Component {
 				return (
 					<Animatable.View duration={400}  style={[styles.content]} transition="backgroundColor">
 						<Animatable.Text style={styles.bodyHeader} animation={isActive ? 'bounceIn' : undefined}>
-							{this._foodRecText()}
+							{this.foodRecText()}
 						</Animatable.Text>
 						<Animatable.Text style={styles.bodySubheader} animation={isActive ? 'bounceIn' : undefined}>
 							We Reccomend: 
@@ -89,8 +101,6 @@ export default class HoroscopeScreen extends React.Component {
 		
 	}
 
-
-
 	render() {
 		return (
 			<View style={{flex: 1}} >
@@ -99,8 +109,8 @@ export default class HoroscopeScreen extends React.Component {
 					<Accordion
 						initiallyActiveSection={0}
 						sections={CONTENT}
-						renderHeader={this._renderHeader}
-						renderContent={this._renderContent}
+						renderHeader={this.renderHeader}
+						renderContent={this.renderContent}
 						duration={400}
 					/> 
 				</View>
@@ -108,20 +118,6 @@ export default class HoroscopeScreen extends React.Component {
 		)
 	}
 }
-
-const CONTENT = [
-  {
-	title: "Today's Horoscope",
-  },
-  {
-	title: "Horoscope's Tone"
-  },
-  {
-	title: "Food Reccomendations"
-  }
-]
-
-var {height, width} = Dimensions.get('window')
 
 const styles = StyleSheet.create({
 	header: {

@@ -4,8 +4,7 @@ import {
 	StyleSheet,
 	Text,
 	Image,
-	AsyncStorage,
-	ActivityIndicator
+	AsyncStorage
 } from 'react-native';
 import {
 	Components,
@@ -37,27 +36,24 @@ export default class HoroscopeTabView extends React.Component {
 				{ key: '2', title: 'Map'},
 				{ key: '3', title: 'About'}
 			],
-			horoscope: "",
-			tone: "",
-			sign: "",
 			region: props.region
 		}
 
-		this._handleChangeTab = this._handleChangeTab.bind(this)
-		this._renderFooter = this._renderFooter.bind(this)
-		this._loadContentAsync = this._loadContentAsync.bind(this)
-		this._renderScene = this._renderScene.bind(this)
+		this.handleChangeTab = this.handleChangeTab.bind(this)
+		this.renderFooter = this.renderFooter.bind(this)
+		this.loadContentAsync = this.loadContentAsync.bind(this)
+		this.renderScene = this.renderScene.bind(this)
 		this.handleBirthdayUpdate = this.handleBirthdayUpdate.bind(this)
 	}
 
 	async componentDidMount() {
-	    await this._loadContentAsync()
+	    await this.loadContentAsync()
 	    this.setState({
 	      	appIsReady: true
 	    })
   	}  
 
-  	async _loadContentAsync() {
+  	async loadContentAsync() {
   		//User's Zodiac Sign
     	var sign = await getAstrologicalSign()
 
@@ -104,7 +100,7 @@ export default class HoroscopeTabView extends React.Component {
 	    })
     }
 
-	_renderScene({route}) {
+	renderScene({route}) {
 		switch(route.key) {
 		case '1':
 			return <HoroscopeScreen switchToMap={()=> this.setState({index: 1})} horoscope={this.state.horoscope} sign={this.state.sign} tone={this.state.tone} foods={this.state.foods}/>
@@ -120,7 +116,7 @@ export default class HoroscopeTabView extends React.Component {
 		}
 	}
 
-	_renderLabel(Scene) {
+	renderLabel(Scene) {
     	const label = Scene.route.title
     	switch(label) {
     	case 'Horoscope':
@@ -142,20 +138,20 @@ export default class HoroscopeTabView extends React.Component {
 	      	appIsReady: false
 	    })
 		await AsyncStorage.setItem('birthday', date)
-		await this._loadContentAsync()
+		await this.loadContentAsync()
 	    this.setState({
 	      	appIsReady: true,
 	      	index: 0
 	    })
 	}
 
-	_handleChangeTab(index) {
+	handleChangeTab(index) {
 		this.setState({ index })
 	}
 
-	_renderFooter(props) {
+	renderFooter(props) {
 		return <TabBar {...props} 
-				renderLabel={this._renderLabel} 
+				renderLabel={this.renderLabel} 
 				borderStyle={{color: "#00000"}} 
 				labelStyle={{color:"#ffffff"}} 
 				indicatorStyle={{backgroundColor: "#ffffff"}}
@@ -175,9 +171,9 @@ export default class HoroscopeTabView extends React.Component {
 				<TabViewAnimated 
 					style = {styles.container}
 					navigationState = {this.state}
-					renderScene = {this._renderScene}
-					onRequestChangeTab = {this._handleChangeTab}
-					renderFooter = {this._renderFooter}
+					renderScene = {this.renderScene}
+					onRequestChangeTab = {this.handleChangeTab}
+					renderFooter = {this.renderFooter}
 				/>
 			</View>
 		)
@@ -185,17 +181,17 @@ export default class HoroscopeTabView extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  loading: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  page: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	container: {
+		flex: 1
+	},
+	loading: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	page: {
+		alignItems: 'center',
+		justifyContent: 'center',
+	}
+})

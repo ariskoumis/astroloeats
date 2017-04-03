@@ -18,10 +18,11 @@ export default class AboutScreen extends React.Component {
 		this.state = {
 			isDateTimePickerVisible: false
 		}
-		this._handleDatePicked = this._handleDatePicked.bind(this)
+
+		this.handleDatePicked = this.handleDatePicked.bind(this)
 	}
 
-	_handleDatePicked(date) {
+	handleDatePicked(date) {
 		this.setState({isDateTimePickerVisible: false})
 		this.props.handleBirthdayUpdate(parseDate(date))
 	}
@@ -76,7 +77,7 @@ export default class AboutScreen extends React.Component {
 
 		        <DateTimePicker
 					isVisible={this.state.isDateTimePickerVisible}
-					onConfirm={this._handleDatePicked}
+					onConfirm={this.handleDatePicked}
 					onCancel={() => this.setState({isDateTimePickerVisible: false})}
 				/>
 			</View>
@@ -85,29 +86,29 @@ export default class AboutScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#fff'
-  },
-  button: {
-  	flex: .5,
-  	backgroundColor: '#1B18B1',
-  	borderRadius: 5,
-  	padding: 5,
-  	margin: 5,
-  	alignItems: 'center'
-  },
-  body: {
-  	fontSize: 15,
-  	paddingLeft: 10,
-	paddingRight: 10
-  },
-  header: {
-  	fontSize: 30
-  },
-  subheader: {
-  	fontSize: 15,
-  	fontStyle: 'italic'
-  }
-});
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		backgroundColor: '#fff'
+	},
+	button: {
+		flex: .5,
+		backgroundColor: '#1B18B1',
+		borderRadius: 5,
+		padding: 5,
+		margin: 5,
+		alignItems: 'center'
+	},
+	body: {
+		fontSize: 15,
+		paddingLeft: 10,
+		paddingRight: 10
+	},
+	header: {
+		fontSize: 30
+	},
+	subheader: {
+		fontSize: 15,
+		fontStyle: 'italic'
+	}
+})

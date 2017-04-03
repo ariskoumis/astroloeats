@@ -19,11 +19,11 @@ export default class HoroscopeScreenHeader extends React.Component {
 
 	componentDidMount() {
 		this.setState({
-			description: this._getDescription()
+			description: this.getDescription()
 		})
 	}
 
-	_getIcon() {
+	getIcon() {
 		switch(this.props.sign) {
 			case 'aquarius':
 				return <Image style={styles.image} resizeMode="contain" source={require('../assets/icons/zodiac-vectors/aquarius.png')} />
@@ -66,7 +66,7 @@ export default class HoroscopeScreenHeader extends React.Component {
 		}
 	}
 
-	_getDescription() {
+	getDescription() {
 		var sign = this.state.sign.toLowerCase()
 		switch(sign) {
 			case 'aquarius':
@@ -110,7 +110,7 @@ export default class HoroscopeScreenHeader extends React.Component {
 		}
 	}
 
-	_getDate() {
+	getDate() {
 		var current = new Date()
 		var month = current.getMonth() + 1
 		var day = current.getDate()
@@ -130,7 +130,7 @@ export default class HoroscopeScreenHeader extends React.Component {
 				</View>
 				<View style={styles.signInfo}>
 					<View style={{flexDirection:"row",alignItems:"center"}}>
-						{this._getIcon()}
+						{this.getIcon()}
 						<View style={{alignItems:'center'}}>
 							<Text style={{fontSize: 30}}> {this.state.sign} </Text>
 							<Text style={{fontStyle: "italic", fontSize: 20}}> {this.state.description} </Text>
@@ -138,7 +138,7 @@ export default class HoroscopeScreenHeader extends React.Component {
 					</View>
 				</View>
 				<View style={styles.currentDate} >
-					{this._getDate()}
+					{this.getDate()}
 				</View>
 			</View>
 

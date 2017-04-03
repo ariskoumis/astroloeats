@@ -1,6 +1,6 @@
 import findDominantTones from './findDominantTones';
 
-export default decideFoods = (toneInput) => {
+export default function decideFoods(toneInput) {
 	var tone = findDominantTones(toneInput)
 	var toneNames = []
 	tone.forEach((category) => {

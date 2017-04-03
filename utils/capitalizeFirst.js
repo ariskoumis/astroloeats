@@ -1,3 +1,3 @@
-export default capitalizeFirst = (str) => {
+export default function capitalizeFirst(str) {
 	return str[0].toUpperCase() + str.slice(1)
 }

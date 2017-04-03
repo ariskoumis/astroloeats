@@ -1,5 +1,3 @@
-'use strict'
-
 import React from 'react';
 import {
     View,
@@ -17,16 +15,16 @@ export default class BarChartColumnBasic extends React.Component {
                     v: 2,
                     name: "hi"
                 }]
-                ]
+            ]
         }
-        this._loadData = this._loadData.bind(this)
+        this.loadData = this.loadData.bind(this)
     }
 
     componentDidMount() {
-        this._loadData()
+        this.loadData()
     }
 
-    _loadData() {
+    loadData() {
         var emotionTone = JSON.parse(JSON.parse(this.props.tone)).document_tone.tone_categories[0].tones
         var graphData = []
         emotionTone.forEach((category) => {
@@ -89,9 +87,9 @@ export default class BarChartColumnBasic extends React.Component {
         }
 
         return (
-          <View style={{alignItems:'center'}}>
-            <Bar style={{flex:1}} data={this.state.data} options={options} accessorKey='v'/>
-          </View>
+            <View style={{alignItems:'center'}}>
+                <Bar style={{flex:1}} data={this.state.data} options={options} accessorKey='v'/>
+            </View>
         )
     }
 }

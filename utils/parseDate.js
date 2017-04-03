@@ -1,4 +1,4 @@
-export default parseDate = (dateObj) => {
+export default function parseDate(dateObj) {
 	var birthday = dateObj
 
 	var month = birthday.getMonth() + 1
