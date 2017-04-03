@@ -44,7 +44,7 @@ export default class LoadingScreen extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Image style={{height: 250, width: 250}} source={require('../assets/icons/loading.gif')} />
+				<Image style={{height: 200, width: 200}} source={require('../assets/icons/loading.gif')} />
 				<Text>Predicting Your Future{this.state.ellipsis}</Text> 
 			</View>
 		);
