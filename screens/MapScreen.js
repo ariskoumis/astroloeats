@@ -12,6 +12,7 @@ import {
 import {
 	Components,
 } from 'expo';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import RestaurantListElement from '../components/RestaurantListElement';
 
@@ -161,6 +162,9 @@ export default class MapScreen extends React.Component {
 			        }}
 			        region={this.state.region}
 		        >
+		        <TouchableOpacity style={{position:'absolute',bottom:5,right:5,backgroundColor:'rgba(0,0,0,.2)'}}> 
+					<Icon onPress={this.openSortingOptions} size={30} name="sort" />
+				</TouchableOpacity> 
 			        <Components.MapView.Marker
 				        image={require('../assets/icons/green-pin.png')}
 				    	key={"Current Location"}
@@ -215,6 +219,7 @@ const styles = StyleSheet.create({
 	},
 	mask: {
 		height: 40,
+		backgroundColor: "#FFE8A2",
 		overflow: 'hidden',
 		justifyContent: 'space-around'
 	}

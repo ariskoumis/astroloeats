@@ -14,6 +14,11 @@ import {
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import LoadingScreen from './screens/LoadingScreen';
+
+const videoSource = require('./assets/videos/loadingBG.mp4');
+const loadingGIF = require('./assets/icons/loading.gif')
+const crystalBall = require('./assets/icons/crystal-ball.png')
+
 class App extends React.Component {
   constructor() {
     super() 
@@ -38,6 +43,9 @@ class App extends React.Component {
       'roboto-bold': require('./assets/fonts/Roboto-Regular.ttf'),
       'vonique': require('./assets/fonts/Vonique-64.ttf')
     })
+    await Expo.Asset.fromModule(videoSource).downloadAsync()
+    await Expo.Asset.fromModule(loadingGIF).downloadAsync()
+    await Expo.Asset.fromModule(crystalBall).downloadAsync()
     this.setState({
       appIsReady: true
     })

@@ -48,10 +48,10 @@ export default class AboutScreen extends React.Component {
 				<Text style={styles.header}> Settings </Text>
 				<View style={{flexDirection: 'row'}}>
 					<TouchableOpacity style={styles.button} onPress={() => this.setState({isDateTimePickerVisible: true})}>
-						<Text> Update Birthday </Text>
+						<Text style={{color:'#ffffff'}}> Update Birthday </Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.button} onPress={this.props.handleLogout}>
-						<Text> Logout </Text>
+						<Text style={{color:'#ffffff'}}> Logout </Text>
 					</TouchableOpacity>
 				</View>
 
@@ -60,7 +60,7 @@ export default class AboutScreen extends React.Component {
 				AstroloEats decides what you should eat based on your daily horoscope! Using IBM Watson's Tone Analyzer, AstrologEats is able to detect the overall tone of your horoscope and uses it to suggest you a resturant that complements your horoscope.
 				</Text>
 
-				<View style={{flex: .5, justifyContent: 'center', alignItems: 'center'}}>
+				<View style={{justifyContent: 'center', alignItems: 'center'}}>
 					<Text style={styles.subheader}>Created by Aris Koumis</Text>
 					<View style={{flexDirection: 'row'}}>
 						<Icon onPress={this.openArisEmail} size={30} name="mail" />
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   button: {
   	flex: .5,
-  	backgroundColor: '#ff00ff',
+  	backgroundColor: '#1B18B1',
   	borderRadius: 5,
   	padding: 5,
   	margin: 5,

@@ -42,14 +42,14 @@ export default class HoroscopeScreen extends React.Component {
 		switch(section.title) {
 			case "Today's Horoscope":
 				return (
-					<Animatable.View duration={400}  style={[styles.content, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
+					<Animatable.View duration={400}  style={[styles.content]} transition="backgroundColor">
 						<Animatable.Text animation={isActive ? 'bounceIn' : undefined}>{this.props.horoscope}</Animatable.Text>
 					</Animatable.View>
 				)
 				break
 			case "Horoscope's Tone":
 				return (
-					<Animatable.View duration={400}  style={[styles.content, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
+					<Animatable.View duration={400}  style={[styles.content]} transition="backgroundColor">
 						<Animatable.Text style={styles.bodyHeader} animation={isActive ? 'bounceIn' : undefined}>
 							This graph displays the probability of each tone that is detected in your horoscope. 
 						</Animatable.Text>
@@ -61,7 +61,7 @@ export default class HoroscopeScreen extends React.Component {
 				break
 			case "Food Reccomendations":
 				return (
-					<Animatable.View duration={400}  style={[styles.content, isActive ? styles.active : styles.inactive]} transition="backgroundColor">
+					<Animatable.View duration={400}  style={[styles.content]} transition="backgroundColor">
 						<Animatable.Text style={styles.bodyHeader} animation={isActive ? 'bounceIn' : undefined}>
 							{this._foodRecText()}
 						</Animatable.Text>
@@ -95,7 +95,6 @@ export default class HoroscopeScreen extends React.Component {
 		return (
 			<View style={{flex: 1}} >
 				<HoroscopeScreenHeader sign={this.props.sign} />
-
 				<View style={styles.container}>
 					<Accordion
 						initiallyActiveSection={0}
@@ -147,27 +146,28 @@ const styles = StyleSheet.create({
 		alignSelf: 'center'
 	},
 	content: {
-		backgroundColor: '#fff',
+		backgroundColor: 'transparent',
 		paddingLeft: 10,
 		paddingRight: 10,
 	},
 	active: {
-		backgroundColor: 'rgba(255,255,255,1)',
+		backgroundColor: '#488FCC',
 	},
 	inactive: {
-		backgroundColor: 'rgba(245,252,255,1)',
+		backgroundColor: '#6CA9DC',
 	},
 	container: {
 		flex: 1,
-		alignItems: 'center'
+		alignItems: 'stretch'
 	},
 	mapButton: {
 		flexDirection:'row', 
-		alignSelf: 'flex-end',
+		alignSelf: 'stretch',
 		alignItems:'center', 
 		justifyContent:'center', 
-		marginTop: 30,
-		backgroundColor: "#ff0000",
+		marginTop: 10,
+		marginBottom: 10,
+		backgroundColor: "#FFC474",
 		borderRadius: 5,
 		padding: 5
 	}
