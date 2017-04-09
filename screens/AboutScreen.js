@@ -58,10 +58,10 @@ export default class AboutScreen extends React.Component {
 
 				<Text style={styles.header}> About </Text>
 				<Text style={styles.body}>
-				AstroloEats decides what you should eat based on your daily horoscope! Using IBM Watson's Tone Analyzer, AstrologEats is able to detect the overall tone of your horoscope and uses it to suggest you a resturant that complements your horoscope.
+				AstroloEats decides what you should eat based on your daily horoscope! Using IBM Watson's Tone Analyzer, AstroloEats is able to detect the overall tone of your horoscope and uses it to suggest you restaurants that complement your predicted mood for the day!
 				</Text>
 
-				<View style={{justifyContent: 'center', alignItems: 'center'}}>
+				<View style={{justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
 					<Text style={styles.subheader}>Created by Aris Koumis</Text>
 					<View style={{flexDirection: 'row'}}>
 						<Icon onPress={this.openArisEmail} size={30} name="mail" />
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	body: {
-		fontSize: 15,
+		fontSize: 20,
 		paddingLeft: 10,
 		paddingRight: 10
 	},

@@ -23,7 +23,7 @@ const CONTENT = [
 		title: "Horoscope's Tone"
 	},
 	{
-		title: "Food Reccomendations"
+		title: "Food Recommendations"
 	}
 ]
 
